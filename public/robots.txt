@@ -1,3 +1,2 @@
-# https://www.robotstxt.org/robotstxt.html
-User-agent: *
-Disallow:
+1. kosz w prawym rogu górnym nie zmiena "selected" "task List".
+2. edycja tylko przy zmianie 
