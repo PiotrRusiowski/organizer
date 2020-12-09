@@ -11,4 +11,5 @@ export const actionTypes = {
   editTask: "EDIT_TASK",
   saveTask: "SAVE_TASK",
   setEditTaskName: "SET_EDIT_TASK_NAME",
+  sortTasksByDate: "SORT_TASKS_BY_DATE",
 };

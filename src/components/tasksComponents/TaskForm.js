@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -19,6 +16,10 @@ import {
 import { connect } from "react-redux";
 import { addNewTask as addNewTaskAction } from "../../actions";
 import moment from "moment";
+import Box from "@material-ui/core/Box";
+
+import styled from "styled-components";
+import FormGroup from "@material-ui/core/FormGroup";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,24 +29,44 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  headingOne: {
-    fontSize: "36px",
-    color: "blue",
-    textAlign: "center",
-  },
   input: {
-    width: "20vw",
+    width: "150px",
+    height: "20px",
+    marginBottom: "20px",
+    marginRight: "10px",
   },
 
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
   btn: {
     backgroundColor: theme.palette.secondary.main,
+    height: "40px",
+    margin: "0px",
+  },
+  select: {
+    height: "40px",
+    marginBottom: "100px",
+    color: "black",
+  },
+  formControl: {
+    width: "120px",
+    marginBottom: "5px",
+  },
+
+  calendar: {
+    width: "150px",
+    // backgroundColor: "white",
+    padding: "0px",
+  },
+  form: {
+    marginTop: "50px",
+    marginBottom: "10px",
+    flexDirection: "column",
+  },
+  formContainer: {
+    display: "flex",
+    alignItems: "center",
+
+    width: "350px",
+    justifyContent: "space-between",
   },
 }));
 
@@ -77,57 +98,70 @@ const TaskForm = ({ addNewTask }) => {
       return;
     } else addNewTask(newTask);
   };
+
   return (
     <>
-      <Typography variant="h3" className={classes.headingOne}>
-        Add new task
-      </Typography>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          id="outlined-basic"
-          label="dodaj zadanie"
-          variant="outlined"
-          className={classes.input}
-          name="name"
-        />
-
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <KeyboardDatePicker
-            margin="normal"
-            id="date-picker-dialog"
-            label="Task deadline"
-            format="dd/MM/yyyy"
-            value={selectedDate}
-            onChange={handleDateChange}
-            KeyboardButtonProps={{
-              "aria-label": "change date",
-            }}
+      <form className={classes.form} onSubmit={handleSubmit}>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          width="300px"
+        >
+          <TextField
+            id="outlined-basic"
+            label="dodaj zadanie"
+            className={classes.input}
+            name="name"
           />
-        </MuiPickersUtilsProvider>
 
-        <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel id="prioritySelect">Priority</InputLabel>
-          <Select
-            labelId="prioritySelect"
-            id="prioritySelect"
-            name="prioritySelect"
-            label="Priority"
-          >
-            <MenuItem value={"low"}>Low</MenuItem>
-            <MenuItem value={"medium"}>Medium</MenuItem>
-            <MenuItem value={"high"}>High</MenuItem>
-          </Select>
-        </FormControl>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              className={classes.calendar}
+              margin="normal"
+              id="date-picker-dialog"
+              label="Task deadline"
+              format="dd/MM/yyyy"
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+          </MuiPickersUtilsProvider>
+        </Box>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          width="300px"
+        >
+          <FormControl className={classes.formControl}>
+            <InputLabel
+              id="demo-controlled-open-select-label"
+              className={classes.inputLabel}
+            >
+              prioryty
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-outlined-label"
+              id="demo-simple-select-outlined"
+              label="prioryty"
+              name="prioritySelect"
+              // className={classes.select}
+            >
+              <MenuItem className={classes.menuItem} value={"low"}>
+                Low
+              </MenuItem>
+              <MenuItem value={"medium"}>Medium</MenuItem>
+              <MenuItem value={"high"}>High</MenuItem>
+            </Select>
+          </FormControl>
 
-        <FormControlLabel
-          value="priority"
-          control={<Checkbox color="primary" />}
-          label="piorytet"
-          labelPlacement="priority"
-        />
-        <Button variant="contained" className={classes.btn} type="submit">
-          AddTask
-        </Button>
+          <Button variant="contained" className={classes.btn} type="submit">
+            AddTask
+          </Button>
+        </Box>
       </form>
     </>
   );

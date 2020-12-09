@@ -67,3 +67,10 @@ export const setEditTaskName = (value) => {
     payload: value,
   };
 };
+
+export const sortTasksByDate = (sortedTasks) => {
+  return {
+    type: actionTypes.sortTasksByDate,
+    payload: sortedTasks,
+  };
+};

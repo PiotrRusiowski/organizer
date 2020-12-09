@@ -19,7 +19,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import DeleteIcon from "@material-ui/icons/Delete";
-import FilterListIcon from "@material-ui/icons/FilterList";
 import { connect } from "react-redux";
 import {
   deleteTasks as deleteTasksAction,
@@ -27,6 +26,7 @@ import {
   editTask as editTaskAction,
   saveTask as saveTaskAction,
   setEditTaskName as setEditTaskNameAction,
+  sortTasksByDate as sortTasksByDateAction,
 } from "../../actions";
 import EditIcon from "@material-ui/icons/Edit";
 import {
@@ -38,17 +38,12 @@ import {
 } from "@material-ui/core";
 import Alert from "./Alert";
 import SaveIcon from "@material-ui/icons/Save";
-import Grid from "@material-ui/core/Grid";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import moment from "moment";
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -92,7 +87,15 @@ const headCells = [
   { id: "priority", numeric: true, disablePadding: false, label: "priority" },
 ];
 
-function EnhancedTableHead(props) {
+const head = {
+  id: "finishDate",
+  numeric: true,
+  disablePadding: false,
+  label: "finish date",
+};
+
+/////////////////
+const EnhancedTableHead = (props) => {
   const {
     classes,
     onSelectAllClick,
@@ -101,9 +104,36 @@ function EnhancedTableHead(props) {
     numSelected,
     rowCount,
     onRequestSort,
+    tasksList,
+    sortTasksByDate,
   } = props;
-  const createSortHandler = (property) => (event) => {
+
+  const [dateSortDirection, setDateSortDirection] = useState("desc");
+
+  const sortHandler = (property) => (event) => {
     onRequestSort(event, property);
+    console.log("SORT", property);
+  };
+
+  const sortTasksListByDate = () => {
+    const tasksListAfterSorting = tasksList.sort((taskOne, taskTwo) => {
+      const taskOneDateArray = taskOne.finishDate.split("/").reverse();
+
+      const taskOneDateString = taskOneDateArray.join("/");
+
+      const taskOneDateAfterFormat = new Date(taskOneDateString);
+
+      const taskTwoDateArray = taskTwo.finishDate.split("/").reverse();
+
+      const taskTwoDateString = taskTwoDateArray.join("/");
+
+      const taskTwoDateAfterFormat = new Date(taskTwoDateString);
+
+      return taskOneDateAfterFormat - taskTwoDateAfterFormat;
+    });
+    sortTasksByDate(tasksListAfterSorting);
+    setDateSortDirection("asc");
+    //KIERUNEK STRZAŁKI
   };
 
   return (
@@ -117,31 +147,30 @@ function EnhancedTableHead(props) {
             inputProps={{ "aria-label": "select all desserts" }}
           />
         </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
-            padding={headCell.disablePadding ? "none" : "default"}
-            sortDirection={orderBy === headCell.id ? order : false}
+
+        <TableCell
+          key={head.id}
+          align={head.numeric ? "right" : "left"}
+          padding={head.disablePadding ? "none" : "default"}
+          sortDirection={orderBy === head.id ? order : false}
+        >
+          <TableSortLabel
+            active={orderBy === head.id}
+            direction={dateSortDirection}
+            onClick={sortTasksListByDate}
           >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </span>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
+            {head.label}
+            {orderBy === head.id ? (
+              <span className={classes.visuallyHidden}>
+                {order === "desc" ? "sorted descending" : "sorted ascending"}
+              </span>
+            ) : null}
+          </TableSortLabel>
+        </TableCell>
       </TableRow>
     </TableHead>
   );
-}
+};
 
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -170,9 +199,10 @@ const useToolbarStyles = makeStyles((theme) => ({
         },
   title: {
     flex: "1 1 100%",
+    // color: "black",
   },
 }));
-
+///////////////////
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected, deleteTasks, selected } = props;
@@ -186,9 +216,8 @@ const EnhancedTableToolbar = (props) => {
       {numSelected > 0 ? (
         <Typography
           className={classes.title}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
+          // variant="subtitle1"
+          // component="div"
         >
           {numSelected} selected
         </Typography>
@@ -203,19 +232,20 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       )}
 
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton aria-label="delete">
-            <DeleteIcon onClick={() => deleteTasks(selected)} />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+      {
+        numSelected > 0 ? (
+          <Tooltip title="Delete">
+            <IconButton aria-label="delete">
+              <DeleteIcon onClick={() => deleteTasks(selected)} />
+            </IconButton>
+          </Tooltip>
+        ) : null
+        // <Tooltip title="Filter list">
+        //   <IconButton aria-label="filter list">
+        //     <FilterListIcon />
+        //   </IconButton>
+        // </Tooltip>
+      }
     </Toolbar>
   );
 };
@@ -265,6 +295,7 @@ const MaterialTaskList2 = ({
   editTask,
   saveTask,
   setEditTaskName,
+  sortTasksByDate,
 }) => {
   const classes = useStyles();
   const [order, setOrder] = useState("asc");
@@ -273,7 +304,78 @@ const MaterialTaskList2 = ({
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [dateAfterEdit, setDateAfterEdit] = useState(null);
+  const [dateAfterEdit, setDateAfterEdit] = useState(new Date());
+
+  const dates = ["04/12/2020", "05/01/2021", "10/03/2021"];
+  const dates2 = [
+    {
+      name: "first",
+      date: "04/12/2020",
+    },
+    {
+      name: "second",
+      date: "10/03/2021",
+    },
+    {
+      name: "thrid",
+      date: "05/01/2021",
+    },
+  ];
+
+  console.log(dates2);
+  //WAŻNE
+  const newnew = dates2.sort((a, b) => {
+    const sortedA = a.date.split("/").reverse();
+
+    const sortedAString = sortedA.join("/");
+
+    const aAfterFormat = new Date(sortedAString);
+
+    const sortedB = b.date.split("/").reverse();
+
+    const sortedBString = sortedB.join("/");
+
+    const bAfterFormat = new Date(sortedBString);
+    console.log("aAfterFormat", sortedBString);
+    console.log("sortedBString", sortedAString);
+
+    console.log(aAfterFormat, "-------", bAfterFormat);
+    console.log(aAfterFormat - bAfterFormat);
+    return aAfterFormat - bAfterFormat;
+  });
+
+  console.log(dates2);
+  console.log(newnew);
+
+  // const newArrayDates2 = dates2.map((date) => {
+  //   const stringAfterSplit = date.split("/").reverse();
+
+  //   const perfectDate = stringAfterSplit.join("/");
+
+  // });
+
+  const stringAfterSplit = dates[0].split("/").reverse();
+  console.log(stringAfterSplit);
+  const perfectDate = stringAfterSplit.join("/");
+  console.log(perfectDate);
+  const dateAfterNewFormat = new Date(perfectDate);
+  console.log(dateAfterNewFormat);
+
+  const stringAfterSplit2 = dates[1].split("/").reverse();
+  console.log(stringAfterSplit2);
+  const perfectDate2 = stringAfterSplit2.join("/");
+  console.log(perfectDate2);
+  const dateAfterNewFormat2 = new Date(perfectDate2);
+  console.log(dateAfterNewFormat2);
+
+  const newDates = [dateAfterNewFormat, dateAfterNewFormat2];
+  console.log(newDates);
+
+  newDates.sort((a, b) => {
+    return a - b;
+  });
+
+  console.log("data po sortowaniu", newDates);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -314,7 +416,7 @@ const MaterialTaskList2 = ({
     setDense(event.target.checked);
   };
 
-  const isSelected = (id) => selected.includes(id); ///???
+  const isSelected = (id) => selected.includes(id);
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, tasksList.length - page * rowsPerPage);
@@ -329,6 +431,7 @@ const MaterialTaskList2 = ({
     console.log(dateAfterEdit);
     console.log(todoPrioritySelectValue);
     const newFinishDate = moment(dateAfterEdit).format("DD/MM/YYYY");
+    console.log(typeof newFinishDate);
     const todoAfterEdit = {
       id,
       name: todoNameInputValue,
@@ -342,7 +445,9 @@ const MaterialTaskList2 = ({
 
   const editTodoDate = (date) => {
     setDateAfterEdit(date);
-  };
+  }; ///////////???????????
+
+  console.log("TUTAJ", tasksList);
 
   return (
     <div className={classes.root}>
@@ -367,12 +472,15 @@ const MaterialTaskList2 = ({
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={tasksList.length}
+              tasksList={tasksList}
+              sortTasksByDate={sortTasksByDate}
             />
             <TableBody>
               {stableSort(tasksList, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((task, index) => {
                   const isItemSelected = isSelected(task.id);
+
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
@@ -405,9 +513,6 @@ const MaterialTaskList2 = ({
                                 <TextField
                                   name="editTodoNameInput"
                                   defaultValue={task.name}
-                                  // onChange={(e) =>
-                                  //   setEditTaskName(e.target.value)
-                                  // }
                                 />
                               ) : (
                                 task.name
@@ -426,7 +531,7 @@ const MaterialTaskList2 = ({
                                     label="Task deadline"
                                     name="editDateCalendar"
                                     format="dd/MM/yyyy"
-                                    // value={dateAfterEdit}
+                                    // defaultValue={new Date()}
                                     onChange={editTodoDate}
                                     KeyboardButtonProps={{
                                       "aria-label": "change date",
@@ -447,9 +552,10 @@ const MaterialTaskList2 = ({
                                   className={classes.formControl}
                                 >
                                   <InputLabel id="prioritySelect">
-                                    Priority
+                                    {task.priority}
                                   </InputLabel>
                                   <Select
+                                    defaultValue={task.priority}
                                     labelId="prioritySelect"
                                     id="prioritySelect"
                                     name="editTodoPrioritySelect"
@@ -470,7 +576,7 @@ const MaterialTaskList2 = ({
                               className={classes.tabeleCell}
                             >
                               {task.isEditing ? (
-                                <Tooltip title="Edit">
+                                <Tooltip title="Save">
                                   <button
                                     style={{
                                       background: "transparent",
@@ -546,5 +652,7 @@ const mapDispatchToProps = (dispatch) => ({
   editTask: (taskId) => dispatch(editTaskAction(taskId)),
   saveTask: (todo) => dispatch(saveTaskAction(todo)),
   setEditTaskName: (value) => dispatch(setEditTaskNameAction(value)),
+  sortTasksByDate: (sortedTasks) =>
+    dispatch(sortTasksByDateAction(sortedTasks)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(MaterialTaskList2);

@@ -57,7 +57,7 @@ const reducer = (state = initialState, action) => {
       console.log(payload);
       return {
         ...state,
-        tasksList: filteredTasks,
+        tasksList: [...filteredTasks],
       };
     case actionTypes.setDeleteAlertClose:
       return {
@@ -75,7 +75,7 @@ const reducer = (state = initialState, action) => {
       );
       return {
         ...state,
-        tasksList: filteredTasksList,
+        tasksList: [...filteredTasksList],
       };
     case actionTypes.editTask:
       const mappedTasksList = state.tasksList.map((task) => {
@@ -86,20 +86,7 @@ const reducer = (state = initialState, action) => {
       });
       return {
         ...state,
-        tasksList: mappedTasksList,
-      };
-
-    case actionTypes.setEditTaskName:
-      const newEditedTask = {
-        id: 1,
-        name: payload,
-        finishDate: "23/11/2020",
-        priority: "low",
-        isEditing: false,
-      };
-      return {
-        ...state,
-        // editedTask: newEditedTask,
+        tasksList: [...mappedTasksList],
       };
 
     case actionTypes.saveTask:
@@ -111,7 +98,13 @@ const reducer = (state = initialState, action) => {
       });
       return {
         ...state,
-        tasksList: editedTaskNameArray,
+        tasksList: [...editedTaskNameArray],
+      };
+
+    case actionTypes.sortTasksByDate:
+      return {
+        ...state,
+        tasksList: [...payload],
       };
 
     default:
