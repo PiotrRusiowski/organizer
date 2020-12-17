@@ -5,14 +5,14 @@ import Container from "@material-ui/core/Container";
 import styled from "styled-components";
 const Tasks = () => {
   const StyledFormContainer = styled(Container)`
-    width: 65%;
+    width: 75%;
   `;
   return (
     <div>
-      <Container maxWidth="md">
+      <StyledFormContainer>
         <TaskForm />
         <MaterialTaskList2 />
-      </Container>
+      </StyledFormContainer>
     </div>
   );
 };

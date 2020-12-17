@@ -12,4 +12,8 @@ export const actionTypes = {
   saveTask: "SAVE_TASK",
   setEditTaskName: "SET_EDIT_TASK_NAME",
   sortTasksByDate: "SORT_TASKS_BY_DATE",
+  sortTasksByName: "SORT_TASKS_BY_NAME",
+  sortTasksByPiority: "SORT_TASKS_BY_PIORITY",
+  openBudgetModalAndSelectWallet: "OPEN_BUDGET_MODAL_AND_SELECT_WALLET",
+  closeBudgetModal: "CLOSE_BUDGET_MODAL",
 };

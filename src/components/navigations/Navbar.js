@@ -35,7 +35,7 @@ const Navbar = ({ currentUser }) => {
 
   return (
     <>
-      <StyledLink>
+      <StyledLink to={routes.home}>
         <ListItem className={classes.listItem} button>
           <ListItemIcon>
             <ShoppingCartIcon />
@@ -68,7 +68,6 @@ const Navbar = ({ currentUser }) => {
           <ListItemText primary="Events" />
         </ListItem>
       </StyledLink>
-
 
       <ListItem button>
         <ListItemIcon>

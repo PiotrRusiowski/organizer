@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import { setCurrentUser as setCurrentUserAction } from "./actions";
 import { auth } from "./fireBaseConfig";
 
-const Root = ({ currentUser, setCurrentUser }) => {
-  useEffect(() => {
+const Root = ({ currentUser, setCurrentUser, tasksList }) => {
+  const checkIfUserIsLogged = () => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setCurrentUser(user);
@@ -18,6 +18,18 @@ const Root = ({ currentUser, setCurrentUser }) => {
         console.log(currentUser);
       }
     });
+  };
+
+  const setTasksListToLocalStorage = () => {
+    localStorage.setItem("tasksList", JSON.stringify(tasksList));
+  };
+
+  useEffect(() => {
+    setTasksListToLocalStorage();
+  }, [tasksList]);
+
+  useEffect(() => {
+    checkIfUserIsLogged();
   }, [currentUser]); //dodawanie do local storage, onAuthStateChanged kiedy się wywołuje?
 
   return <>{currentUser ? <MainTemplate /> : <UnloggedUserTemplate />}</>;
@@ -25,6 +37,7 @@ const Root = ({ currentUser, setCurrentUser }) => {
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
+  tasksList: state.tasksList,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -74,3 +74,26 @@ export const sortTasksByDate = (sortedTasks) => {
     payload: sortedTasks,
   };
 };
+export const sortTasksByName = (sortedTasks) => {
+  return {
+    type: actionTypes.sortTasksByName,
+    payload: sortedTasks,
+  };
+};
+export const sortTasksByPiority = (sortedTasks) => {
+  return {
+    type: actionTypes.sortTasksByPiority,
+    payload: sortedTasks,
+  };
+};
+export const openBudgetModalAndSelectWallet = (walletId) => {
+  return {
+    type: actionTypes.openBudgetModalAndSelectWallet,
+    payload: walletId,
+  };
+};
+export const closeBudgetModal = () => {
+  return {
+    type: actionTypes.closeBudgetModal,
+  };
+};

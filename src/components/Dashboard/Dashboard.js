@@ -126,6 +126,10 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  allertBtn: {
+    marginLeft: "auto",
+    marginRight: "20px",
+  },
 }));
 
 export default function Dashboard({ children }) {
@@ -160,7 +164,7 @@ export default function Dashboard({ children }) {
             <MenuIcon />
           </IconButton>
 
-          <IconButton color="inherit">
+          <IconButton color="inherit" className={classes.allertBtn}>
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge>

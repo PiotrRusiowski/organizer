@@ -1,27 +1,45 @@
 import { actionTypes } from "../actions/actionTypes";
 
+const getTasksListFromLocalStorage = () => {
+  let tasksListLocalStorage;
+
+  if (localStorage.getItem("tasksList")) {
+    tasksListLocalStorage = JSON.parse(localStorage.getItem("tasksList"));
+  } else {
+    tasksListLocalStorage = [];
+  }
+
+  return tasksListLocalStorage;
+};
+
 const initialState = {
+  isBudgetModalOpen: false,
   userEmail: "",
   userPassword: "",
   isUserAccountCreated: false,
   currentUser: null,
-  editedTask: {
-    id: 1,
-    name: "pierwsze zadananie",
-    finishDate: "23/11/2020",
-    priority: "low",
-    isEditing: false,
-  },
+
   editedTaskName: "",
-  tasksList: [
+
+  tasksList: getTasksListFromLocalStorage(),
+  wallets: [
     {
-      id: 1,
-      name: "pierwsze zadananie",
-      finishDate: "23/11/2020",
-      priority: "low",
-      isEditing: false,
+      walletId: 1,
+      walletName: "food",
+      walletBalance: 1000,
+      outcomes: 0,
+      incomes: 0,
+    },
+
+    {
+      walletId: 2,
+      walletName: "house",
+      walletBalance: 2000,
+      outcomes: 0,
+      incomes: 0,
     },
   ],
+  selectedWallet: null,
   isDeleteAlertOpen: false,
 };
 const reducer = (state = initialState, action) => {
@@ -52,7 +70,6 @@ const reducer = (state = initialState, action) => {
     case actionTypes.deleteTasks:
       const filteredTasks = state.tasksList.filter((task) => {
         return !payload.includes(task.id);
-        // return payload !== task.id;
       });
       console.log(payload);
       return {
@@ -106,7 +123,31 @@ const reducer = (state = initialState, action) => {
         ...state,
         tasksList: [...payload],
       };
+    case actionTypes.sortTasksByName:
+      return {
+        ...state,
+        tasksList: [...payload],
+      };
 
+    case actionTypes.sortTasksByPiority:
+      return {
+        ...state,
+        tasksList: [...payload],
+      };
+    case actionTypes.openBudgetModalAndSelectWallet:
+      const findetWallet = state.wallets.find(
+        (wallet) => payload === wallet.walletId
+      );
+      return {
+        ...state,
+        isBudgetModalOpen: true,
+        selectedWallet: findetWallet,
+      };
+    case actionTypes.closeBudgetModal:
+      return {
+        ...state,
+        isBudgetModalOpen: false,
+      };
     default:
       return state;
   }

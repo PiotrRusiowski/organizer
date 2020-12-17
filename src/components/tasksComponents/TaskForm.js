@@ -19,8 +19,6 @@ import moment from "moment";
 import Box from "@material-ui/core/Box";
 
 import styled from "styled-components";
-import FormGroup from "@material-ui/core/FormGroup";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -85,18 +83,21 @@ const TaskForm = ({ addNewTask }) => {
     const deadline = moment(selectedDate).format("DD/MM/YYYY");
 
     console.log(deadline);
+    console.log(JSON.parse(e.target.prioritySelect.value));
+
+    const priorityObject = JSON.parse(e.target.prioritySelect.value);
 
     const newTask = {
       id: uuidv4(),
       name: e.target.name.value,
-      priority: e.target.prioritySelect.value,
+      priority: priorityObject,
       finishDate: deadline,
       isEditing: false,
     };
 
-    if (e.target.name.value === "") {
-      return;
-    } else addNewTask(newTask);
+    addNewTask(newTask);
+
+    e.target.reset();
   };
 
   return (
@@ -113,6 +114,7 @@ const TaskForm = ({ addNewTask }) => {
             label="dodaj zadanie"
             className={classes.input}
             name="name"
+            required
           />
 
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -148,13 +150,37 @@ const TaskForm = ({ addNewTask }) => {
               id="demo-simple-select-outlined"
               label="prioryty"
               name="prioritySelect"
+              defaultValue={JSON.stringify({
+                priorityName: "low",
+                priorityValue: 1,
+              })}
               // className={classes.select}
             >
-              <MenuItem className={classes.menuItem} value={"low"}>
+              <MenuItem
+                className={classes.menuItem}
+                value={JSON.stringify({
+                  priorityName: "low",
+                  priorityValue: 1,
+                })}
+              >
                 Low
               </MenuItem>
-              <MenuItem value={"medium"}>Medium</MenuItem>
-              <MenuItem value={"high"}>High</MenuItem>
+              <MenuItem
+                value={JSON.stringify({
+                  priorityName: "medium",
+                  priorityValue: 2,
+                })}
+              >
+                Medium
+              </MenuItem>
+              <MenuItem
+                value={JSON.stringify({
+                  priorityName: "high",
+                  priorityValue: 3,
+                })}
+              >
+                High
+              </MenuItem>
             </Select>
           </FormControl>
 
