@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import {
   setDeleteAlertClose,
   deleteSingleTask as deleteSingleTaskAction,
+  deleteSingleWallet as deleteSingleWalletAction,
 } from "../../actions";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -17,44 +18,41 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Alert = ({
   deleteAlertClose,
   isDeleteAlertOpen,
-  taskId,
+
   deleteSingleTask,
+  walletId,
+  deleteSingleWallet,
 }) => {
   return (
-    <div>
-      <Dialog
-        open={isDeleteAlertOpen}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={deleteAlertClose}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle id="alert-dialog-slide-title">
-          {"Are you sure to delete this task?"}
-        </DialogTitle>
+    <Dialog
+      open={isDeleteAlertOpen}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={deleteAlertClose}
+      aria-labelledby="alert-dialog-slide-title"
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <DialogTitle id="alert-dialog-slide-title">
+        {"Are you sure to delete this task?"}
+      </DialogTitle>
 
-        <DialogActions>
-          <Button
-            onClick={deleteAlertClose}
-            color="primary"
-            variant="contained"
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={() => {
-              deleteAlertClose();
-              deleteSingleTask(taskId);
-            }}
-            color="secondary"
-            variant="contained"
-          >
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+      <DialogActions>
+        <Button onClick={deleteAlertClose} color="primary" variant="contained">
+          Cancel
+        </Button>
+        <Button
+          onClick={() => {
+            deleteSingleWallet();
+            deleteAlertClose();
+            deleteSingleTask();
+          }}
+          color="secondary"
+          variant="contained"
+        >
+          Delete {walletId}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 const mapStateToProps = (state) => ({
@@ -62,6 +60,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
   deleteAlertClose: () => dispatch(setDeleteAlertClose()),
-  deleteSingleTask: (id) => dispatch(deleteSingleTaskAction(id)),
+  deleteSingleTask: () => dispatch(deleteSingleTaskAction()),
+  deleteSingleWallet: () => dispatch(deleteSingleWalletAction()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Alert);

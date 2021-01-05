@@ -31,10 +31,13 @@ export const deleteTasks = (taskIds) => {
     payload: taskIds,
   };
 };
-export const setDeleteAlertOpen = () => {
+export const setDeleteAlertOpen = (id) => {
   return {
     type: actionTypes.setDeleteAlertOpen,
-    payload: true,
+    payload: {
+      isOpen: true,
+      selectedWalletTaskId: id,
+    },
   };
 };
 export const setDeleteAlertClose = () => {
@@ -43,10 +46,9 @@ export const setDeleteAlertClose = () => {
     payload: false,
   };
 };
-export const deleteSingleTask = (id) => {
+export const deleteSingleTask = () => {
   return {
     type: actionTypes.deleteSingleTask,
-    payload: id,
   };
 };
 export const editTask = (id) => {
@@ -95,5 +97,29 @@ export const openBudgetModalAndSelectWallet = (walletId) => {
 export const closeBudgetModal = () => {
   return {
     type: actionTypes.closeBudgetModal,
+  };
+};
+
+export const setBudgetOperation = (budgetOperation) => {
+  return {
+    type: actionTypes.setBudgetOperation,
+    payload: budgetOperation,
+  };
+};
+export const addNewBudget = (IcomesOutcomes, id) => {
+  return {
+    type: actionTypes.addNewBudget,
+    payload: { IcomesOutcomes, id },
+  };
+};
+export const addNewWallet = (newWallet) => {
+  return {
+    type: actionTypes.addWallet,
+    payload: newWallet,
+  };
+};
+export const deleteSingleWallet = () => {
+  return {
+    type: actionTypes.deleteSingleWallet,
   };
 };

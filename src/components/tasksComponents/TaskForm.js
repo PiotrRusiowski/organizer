@@ -18,7 +18,6 @@ import { addNewTask as addNewTaskAction } from "../../actions";
 import moment from "moment";
 import Box from "@material-ui/core/Box";
 
-import styled from "styled-components";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -65,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
 
     width: "350px",
     justifyContent: "space-between",
+  },
+  priorityColor: {
+    color: "green",
   },
 }));
 
@@ -161,6 +163,7 @@ const TaskForm = ({ addNewTask }) => {
                 value={JSON.stringify({
                   priorityName: "low",
                   priorityValue: 1,
+                  priorityColor: "green",
                 })}
               >
                 Low
@@ -168,6 +171,7 @@ const TaskForm = ({ addNewTask }) => {
               <MenuItem
                 value={JSON.stringify({
                   priorityName: "medium",
+                  priorityColor: "orange",
                   priorityValue: 2,
                 })}
               >
@@ -176,6 +180,7 @@ const TaskForm = ({ addNewTask }) => {
               <MenuItem
                 value={JSON.stringify({
                   priorityName: "high",
+                  priorityColor: "red",
                   priorityValue: 3,
                 })}
               >

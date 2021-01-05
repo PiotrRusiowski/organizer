@@ -13,5 +13,10 @@ export const mainTheme = createMuiTheme({
       contrastText: "#F5F6FA",
     },
     pink: "#F272A1",
+    priority: {
+      low: "green",
+      medium: "orange",
+      high: "red",
+    },
   },
 });

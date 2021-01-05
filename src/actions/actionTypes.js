@@ -16,4 +16,8 @@ export const actionTypes = {
   sortTasksByPiority: "SORT_TASKS_BY_PIORITY",
   openBudgetModalAndSelectWallet: "OPEN_BUDGET_MODAL_AND_SELECT_WALLET",
   closeBudgetModal: "CLOSE_BUDGET_MODAL",
+  setBudgetOperation: "SET_BUDGET_OPERATION",
+  addNewBudget: "ADD_NEW_BUDGET",
+  addWallet: "ADD_WALLET",
+  deleteSingleWallet: "DELETE_SINGLE_WALLET",
 };

@@ -46,7 +46,6 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import moment from "moment";
-import Grid from "@material-ui/core/Grid";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -153,9 +152,8 @@ const EnhancedTableHead = (props) => {
         }
         return 0;
       });
-
-      sortTasksByName(sortedTasksList);
       setNameSortDirection("asc");
+      sortTasksByName(sortedTasksList);
     } else {
       const sortedTasksList = tasksList
         .sort((a, b) => {
@@ -419,15 +417,12 @@ const MaterialTaskList2 = ({
     e.preventDefault();
 
     const todoNameInputValue = e.target.editTodoNameInput.value;
-    console.log(todoNameInputValue);
 
     const todoPrioritySelectValue = JSON.parse(
       e.target.editTodoPrioritySelect.value
     );
-    console.log(dateAfterEdit);
-    console.log(todoPrioritySelectValue);
+
     const newFinishDate = moment(dateAfterEdit).format("DD/MM/YYYY");
-    console.log(typeof newFinishDate);
     const todoAfterEdit = {
       id,
       name: todoNameInputValue,
@@ -574,13 +569,13 @@ const MaterialTaskList2 = ({
                                       priorityName: "low",
                                       priorityValue: 1,
                                     })}
-                                    // className={classes.select}
                                   >
                                     <MenuItem
                                       className={classes.menuItem}
                                       value={JSON.stringify({
                                         priorityName: "low",
                                         priorityValue: 1,
+                                        priorityColor: "green",
                                       })}
                                     >
                                       Low
@@ -588,6 +583,7 @@ const MaterialTaskList2 = ({
                                     <MenuItem
                                       value={JSON.stringify({
                                         priorityName: "medium",
+                                        priorityColor: "orange",
                                         priorityValue: 2,
                                       })}
                                     >
@@ -596,6 +592,7 @@ const MaterialTaskList2 = ({
                                     <MenuItem
                                       value={JSON.stringify({
                                         priorityName: "high",
+                                        priorityColor: "red",
                                         priorityValue: 3,
                                       })}
                                     >
@@ -604,7 +601,13 @@ const MaterialTaskList2 = ({
                                   </Select>
                                 </FormControl>
                               ) : (
-                                task.priority.priorityName
+                                <p
+                                  style={{
+                                    color: task.priority.priorityColor,
+                                  }}
+                                >
+                                  {task.priority.priorityName}
+                                </p>
                               )}
                             </TableCell>
 
@@ -652,7 +655,9 @@ const MaterialTaskList2 = ({
                                   aria-label="delete"
                                   style={{ padding: "0" }}
                                 >
-                                  <DeleteIcon onClick={deleteAlertOpen} />
+                                  <DeleteIcon
+                                    onClick={() => deleteAlertOpen(task.id)}
+                                  />
                                 </IconButton>
                               </Tooltip>
                             </TableCell>
@@ -660,7 +665,7 @@ const MaterialTaskList2 = ({
                         </TableCell>
                       </TableRow>
 
-                      <Alert taskId={task.id} />
+                      <Alert />
                     </>
                   );
                 })}
@@ -694,7 +699,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
   deleteTasks: (taskIds) => dispatch(deleteTasksAction(taskIds)),
-  deleteAlertOpen: () => dispatch(setDeleteAlertOpen()),
+  deleteAlertOpen: (taskId) => dispatch(setDeleteAlertOpen(taskId)),
   editTask: (taskId) => dispatch(editTaskAction(taskId)),
   saveTask: (todo) => dispatch(saveTaskAction(todo)),
   setEditTaskName: (value) => dispatch(setEditTaskNameAction(value)),
