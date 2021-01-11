@@ -6,7 +6,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
 
 import SingleWallet from "../singleWallet/SingleWallet";
-import DataChart from "../dataChart/DataChart";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -65,7 +64,6 @@ const WalletList = ({
 
   return (
     <div>
-      <DataChart />
       <h3>
         Monthly income:
         <input type="number" defaultValue={monthlyIncome}></input>
