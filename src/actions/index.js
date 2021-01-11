@@ -123,3 +123,28 @@ export const deleteSingleWallet = () => {
     type: actionTypes.deleteSingleWallet,
   };
 };
+
+export const setWalletCollapsed = (walletId) => {
+  return {
+    type: actionTypes.setWalletCollapsed,
+    payload: walletId,
+  };
+};
+export const deleteIncome = (id) => {
+  return {
+    type: actionTypes.deleteIncome,
+    payload: id,
+  };
+};
+export const selectedWallet = (id) => {
+  return {
+    type: actionTypes.selectedWallet,
+    payload: id,
+  };
+};
+export const openWalletModal = () => {
+  return {
+    type: actionTypes.openWalletModal,
+    payload: true,
+  };
+};

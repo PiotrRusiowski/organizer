@@ -46,6 +46,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import moment from "moment";
+import Divider from "@material-ui/core/Divider";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -334,7 +335,12 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "5px",
     margin: "0px",
     width: "100%",
+    position: "relative",
   },
+  // divider: {
+  //   position: "absolute",
+  //   bottom: "20px",
+  // },
   checkbox: {
     width: "10px",
     borderBottom: "none",
@@ -493,6 +499,7 @@ const MaterialTaskList2 = ({
                               columnGap: "12px",
                               justifyItems: "left",
                               overflow: "hidden",
+                              // position: "relative",
                             }}
                             onSubmit={(e) => handleEditTodo(task.id, e)}
                           >
@@ -568,6 +575,7 @@ const MaterialTaskList2 = ({
                                     defaultValue={JSON.stringify({
                                       priorityName: "low",
                                       priorityValue: 1,
+                                      priorityColor: "green",
                                     })}
                                   >
                                     <MenuItem

@@ -20,7 +20,6 @@ const Alert = ({
   isDeleteAlertOpen,
 
   deleteSingleTask,
-  walletId,
   deleteSingleWallet,
 }) => {
   return (
@@ -49,7 +48,7 @@ const Alert = ({
           color="secondary"
           variant="contained"
         >
-          Delete {walletId}
+          Delete
         </Button>
       </DialogActions>
     </Dialog>

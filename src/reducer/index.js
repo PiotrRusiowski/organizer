@@ -14,18 +14,21 @@ const getTasksListFromLocalStorage = () => {
 
 const initialState = {
   isBudgetModalOpen: false,
-  selectedBugdetOperation: null,
+  selectedBugdetOperation: "",
   userEmail: "",
   userPassword: "",
   isUserAccountCreated: false,
   currentUser: null,
-  selectedWallet: "",
+  // selectedWallet: "",
   isDeleteAlertOpen: false,
   editedTaskName: "",
   tasksList: getTasksListFromLocalStorage(),
   // selectedWalletId: "",
   // selectedTaskId: "",
   selectedWalletTaskId: "",
+  totalBalance: 0,
+  monthlyIncome: 0,
+  selectedWallet: "",
 
   walletsList: [
     {
@@ -36,6 +39,7 @@ const initialState = {
       incomes: 0,
       incomesList: [],
       outcomesList: [],
+      isCollapse: false,
     },
 
     {
@@ -46,6 +50,7 @@ const initialState = {
       incomes: 0,
       incomesList: [],
       outcomesList: [],
+      isCollapse: false,
     },
   ],
 };
@@ -142,15 +147,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         tasksList: [...payload],
       };
-    case actionTypes.openBudgetModalAndSelectWallet:
-      const findetWallet = state.walletsList.find(
-        (wallet) => payload === wallet.walletId
-      );
-      return {
-        ...state,
-        isBudgetModalOpen: true,
-        selectedWallet: findetWallet,
-      };
+
     case actionTypes.closeBudgetModal:
       return {
         ...state,
@@ -170,7 +167,7 @@ const reducer = (state = initialState, action) => {
           if (state.selectedBugdetOperation === "incomes") {
             wallet.walletBalance =
               wallet.walletBalance + payload.IcomesOutcomes.value;
-            wallet.incomes = payload.IcomesOutcomes.value;
+            wallet.incomes = wallet.incomes + payload.IcomesOutcomes.value;
             wallet.incomesList = [
               ...wallet.incomesList,
               payload.IcomesOutcomes,
@@ -178,7 +175,7 @@ const reducer = (state = initialState, action) => {
           } else if (state.selectedBugdetOperation === "outcomes") {
             wallet.walletBalance =
               wallet.walletBalance - payload.IcomesOutcomes.value;
-            wallet.outcomes = payload.IcomesOutcomes.value;
+            wallet.outcomes = wallet.outcomes - payload.IcomesOutcomes.value;
             wallet.outcomesList = [
               ...wallet.outcomesList,
               payload.IcomesOutcomes,
@@ -191,7 +188,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         walletsList: [...mappedWallets],
-        selectedBugdetOperation: null,
+        selectedBugdetOperation: "",
       };
 
     case actionTypes.addWallet:
@@ -200,19 +197,64 @@ const reducer = (state = initialState, action) => {
         walletsList: [...state.walletsList, payload],
       };
 
-    default:
-      return state;
+    case actionTypes.setWalletCollapsed:
+      const newWallets = state.walletsList.map((wallet) => {
+        if (wallet.walletId === payload) {
+          wallet.isCollapse = !wallet.isCollapse;
+        }
+        return wallet;
+      });
+      return {
+        ...state,
+        walletsList: [...newWallets],
+      };
+
     case actionTypes.deleteSingleWallet:
       const filteredWalletsList = state.walletsList.filter(
         (wallet) => state.selectedWalletTaskId !== wallet.walletId
-
-        //payload.id!==wallet.walletId
       );
 
       return {
         ...state,
         walletsList: [...filteredWalletsList],
       };
+    case actionTypes.deleteIncome:
+      const filterWalletsList = state.walletsList.map((wallet) => {
+        const filteredIncomesList = wallet.incomesList.filter(
+          (income) => income.id !== payload
+        );
+        wallet.incomesList = filteredIncomesList;
+        return wallet;
+      });
+      return {
+        ...state,
+        walletsList: [...filterWalletsList],
+      };
+    case actionTypes.selectedWallet:
+      const setSelectedWallet = state.walletsList.find(
+        (wallet) => payload === wallet.walletId
+      );
+      return {
+        ...state,
+        selectedWallet: setSelectedWallet,
+      };
+    // case actionTypes.openBudgetModalAndSelectWallet:
+    // const findetWallet = state.walletsList.find(
+    //   (wallet) => payload === wallet.walletId
+    // );
+    // return {
+    //   ...state,
+    //   isBudgetModalOpen: true,
+    //   selectedWallet: findetWallet,
+    // };
+    case actionTypes.openWalletModal:
+      return {
+        ...state,
+        isBudgetModalOpen: true,
+      };
+
+    default:
+      return state;
   }
 };
 export default reducer;

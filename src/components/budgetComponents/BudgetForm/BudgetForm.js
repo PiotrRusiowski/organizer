@@ -1,9 +1,5 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import { connect } from "react-redux";
@@ -16,7 +12,7 @@ const BudgetForm = ({ addWallet }) => {
     const newWallet = {
       walletId: uuidv4(),
       walletName: e.target.name.value,
-      walletBalance: e.target.balance.value,
+      walletBalance: parseInt(e.target.balance.value),
       outcomes: 0,
       incomes: 0,
       incomesList: [],

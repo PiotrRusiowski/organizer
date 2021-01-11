@@ -20,4 +20,8 @@ export const actionTypes = {
   addNewBudget: "ADD_NEW_BUDGET",
   addWallet: "ADD_WALLET",
   deleteSingleWallet: "DELETE_SINGLE_WALLET",
+  setWalletCollapsed: "SET_WALLET_COLLAPSED",
+  deleteIncome: "DELETE_INCOME",
+  selectedWallet: "SELECTED_WALLET",
+  openWalletModal: "OPEN_WALLET_MODAL",
 };

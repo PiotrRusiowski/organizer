@@ -13,6 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
+import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,14 +42,18 @@ const AddBudget = ({
   const handleAddBudget = (e) => {
     e.preventDefault();
     const IcomesOutcomes = {
+      id: uuidv4(),
       name: e.target.nameOfValue.value,
-      value: parseInt(e.target.value.value),
+      value: parseFloat(e.target.value.value),
     };
     // const value = parseInt(e.target.value.value);
     const id = walletId;
 
     addNewBudget(IcomesOutcomes, id);
+
+    e.target.reset();
   };
+
   return (
     <Dialog
       open={isBudgetModalOpen}
@@ -78,7 +83,10 @@ const AddBudget = ({
             id="demo-simple-select-outlined"
             label="balanceOperation"
             name="balanceOperationSelect"
-            onChange={(e) => setBudgetOperation(e.target.value)}
+            value={selectedBugdetOperation}
+            onChange={(e) => {
+              setBudgetOperation(e.target.value);
+            }}
           >
             <MenuItem className={classes.menuItem} value="outcomes">
               Outcomes
@@ -87,7 +95,7 @@ const AddBudget = ({
           </Select>
         </FormControl>
 
-        {selectedBugdetOperation === null ? null : (
+        {selectedBugdetOperation === "" ? null : (
           <form onSubmit={(e) => handleAddBudget(e)}>
             <input
               type="number"
