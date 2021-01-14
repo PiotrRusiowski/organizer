@@ -5,6 +5,7 @@ import {
   setWalletCollapsed,
   deleteIncome as deleteIncomeAction,
   selectedWallet as selectedWalletAction,
+  deleteOutcome as deleteOutcomeAction,
 } from "../../../actions";
 import Alert from "../../tasksComponents/Alert";
 import clsx from "clsx";
@@ -76,6 +77,7 @@ const SingleWallet = ({
   incomesList,
   outcomesList,
   isCollapse,
+  deleteOutcome,
 }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -164,6 +166,9 @@ const SingleWallet = ({
                         {outcome.name}
                         <span style={{ color: "red" }}>-{outcome.value}$</span>
                       </p>
+                      <button onClick={() => deleteOutcome(outcome.id)}>
+                        X
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -184,6 +189,7 @@ const mapDispatchToProps = (dispatch) => ({
   deleteAlertOpen: (walletId) => dispatch(setDeleteAlertOpen(walletId)),
   setWalletCollapsed: (walletId) => dispatch(setWalletCollapsed(walletId)),
   deleteIncome: (id) => dispatch(deleteIncomeAction(id)),
+  deleteOutcome: (id) => dispatch(deleteOutcomeAction(id)),
   selectedWallet: (id) => dispatch(selectedWalletAction(id)),
 });
 export default connect(null, mapDispatchToProps)(SingleWallet);

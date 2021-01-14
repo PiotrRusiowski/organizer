@@ -24,4 +24,7 @@ export const actionTypes = {
   deleteIncome: "DELETE_INCOME",
   selectedWallet: "SELECTED_WALLET",
   openWalletModal: "OPEN_WALLET_MODAL",
+  setMonthlyIncome: "SET_MONTHLY_INCOME",
+  deleteOutcome: "DELETE_OUTCOME",
+  addWalletBalnaceToTotal: "ADD_WALLET_BALLANCE_TO_TOTAL",
 };

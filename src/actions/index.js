@@ -148,3 +148,21 @@ export const openWalletModal = () => {
     payload: true,
   };
 };
+
+export const setMonthlyIncome = (monthlyIncome) => {
+  return {
+    type: actionTypes.setMonthlyIncome,
+    payload: monthlyIncome,
+  };
+};
+export const deleteOutcome = (id) => {
+  return {
+    type: actionTypes.deleteOutcome,
+    payload: id,
+  };
+};
+export const addWalletBalnaceToTotal = () => {
+  return {
+    type: actionTypes.addWalletBalnaceToTotal,
+  };
+};

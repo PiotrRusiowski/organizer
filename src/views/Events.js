@@ -4,6 +4,7 @@ import BudgetForm from "../components/budgetComponents/BudgetForm/BudgetForm";
 import DataChart from "../components/budgetComponents/dataChart/DataChart";
 import WalletList from "../components/budgetComponents/walletList/WalletList";
 import styled from "styled-components";
+import BudgetHeader from "../components/budgetComponents/BudgetHeader/BudgetHeader";
 
 const Events = () => {
   const StyledEvents = styled.div`
@@ -11,7 +12,11 @@ const Events = () => {
   `;
   return (
     <StyledEvents>
-      <WalletList />
+      <div>
+        <BudgetHeader />
+        <WalletList />
+      </div>
+
       <AddBudget />
       <BudgetForm />
       <DataChart />
