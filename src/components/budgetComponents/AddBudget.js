@@ -41,15 +41,33 @@ const AddBudget = ({
   const classes = useStyles();
   const handleAddBudget = (e) => {
     e.preventDefault();
-    const IcomesOutcomes = {
-      id: uuidv4(),
-      name: e.target.nameOfValue.value,
-      value: parseFloat(e.target.value.value),
-    };
-    // const value = parseInt(e.target.value.value);
-    const id = walletId;
 
-    addNewBudget(IcomesOutcomes, id);
+    const amount = e.target.value.value;
+
+    if (amount.includes("-")) {
+      console.log("ZAWIERA");
+
+      const formatedAmount = amount.slice(1, amount.length);
+      const IcomesOutcomes = {
+        id: uuidv4(),
+        name: e.target.nameOfValue.value,
+        value: parseFloat(formatedAmount),
+      };
+      // const value = parseInt(e.target.value.value);
+      const id = walletId;
+
+      addNewBudget(IcomesOutcomes, id);
+    } else {
+      const IcomesOutcomes = {
+        id: uuidv4(),
+        name: e.target.nameOfValue.value,
+        value: parseFloat(amount),
+      };
+      // const value = parseInt(e.target.value.value);
+      const id = walletId;
+
+      addNewBudget(IcomesOutcomes, id);
+    }
 
     e.target.reset();
   };

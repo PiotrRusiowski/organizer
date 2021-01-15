@@ -152,7 +152,7 @@ const SingleWallet = ({
                     <li>
                       <p>
                         {income.name}
-                        <span style={{ color: "green" }}>+{income.value}$</span>
+                        <span style={{ color: "green" }}>{income.value}$</span>
                       </p>
                       <button onClick={() => deleteIncome(income.id)}>X</button>
                     </li>

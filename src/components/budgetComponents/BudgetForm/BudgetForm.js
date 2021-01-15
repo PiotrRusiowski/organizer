@@ -20,6 +20,8 @@ const BudgetForm = ({ addWallet }) => {
     };
 
     addWallet(newWallet);
+
+    e.target.reset();
   };
   return (
     <form onSubmit={handleSubmit}>

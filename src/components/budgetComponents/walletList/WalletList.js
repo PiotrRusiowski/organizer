@@ -4,9 +4,9 @@ import SingleWallet from "../singleWallet/SingleWallet";
 import { addWalletBalnaceToTotal as addWalletBalnaceToTotalAction } from "../../../actions";
 
 const WalletList = ({ walletsList, addWalletBalnaceToTotal }) => {
-  useEffect(() => {
-    addWalletBalnaceToTotal();
-  }, [walletsList]);
+  // useEffect(() => {
+  //   addWalletBalnaceToTotal();
+  // }, [walletsList]);
   return (
     <div>
       <ul>
@@ -23,7 +23,7 @@ const mapStateToProps = (state) => ({
   walletsList: state.walletsList,
 });
 const mapDispatchToProps = (dispatch) => ({
-  addWalletBalnaceToTotal: () => dispatch(addWalletBalnaceToTotalAction()),
+  // addWalletBalnaceToTotal: () => dispatch(addWalletBalnaceToTotalAction()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletList);

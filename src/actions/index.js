@@ -149,10 +149,10 @@ export const openWalletModal = () => {
   };
 };
 
-export const setMonthlyIncome = (monthlyIncome) => {
+export const setMonthlyIncome = (singleIncome) => {
   return {
     type: actionTypes.setMonthlyIncome,
-    payload: monthlyIncome,
+    payload: singleIncome,
   };
 };
 export const deleteOutcome = (id) => {

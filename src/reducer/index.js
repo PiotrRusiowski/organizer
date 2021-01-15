@@ -26,22 +26,14 @@ const initialState = {
   totalBalance: 0,
   monthlyIncome: 0,
   selectedWallet: "",
+  doneWallets: [],
+  monthlyIncomesList: [],
 
   walletsList: [
     // {
     //   walletId: 1,
     //   walletName: "food",
     //   walletBalance: 1000,
-    //   outcomes: 0,
-    //   incomes: 0,
-    //   incomesList: [],
-    //   outcomesList: [],
-    //   isCollapse: false,
-    // },
-    // {
-    //   walletId: 2,
-    //   walletName: "house",
-    //   walletBalance: 2000,
     //   outcomes: 0,
     //   incomes: 0,
     //   incomesList: [],
@@ -162,6 +154,7 @@ const reducer = (state = initialState, action) => {
         console.log();
         if (wallet.walletId === payload.id) {
           if (state.selectedBugdetOperation === "incomes") {
+            console.log("INCOMES");
             wallet.walletBalance =
               wallet.walletBalance + payload.IcomesOutcomes.value;
             wallet.incomes = wallet.incomes + payload.IcomesOutcomes.value;
@@ -193,6 +186,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         // totalBalance: state.totalBalance + payload.walletBalance,
         walletsList: [...state.walletsList, payload],
+        totalBalance: state.totalBalance - payload.walletBalance,
       };
 
     case actionTypes.setWalletCollapsed:
@@ -212,12 +206,18 @@ const reducer = (state = initialState, action) => {
       //   (wallet) => payload === wallet.Id
       // );
 
-      const filteredWalletsList = state.walletsList.filter(
-        (wallet) => state.selectedWalletTaskId !== wallet.walletId
-      );
+      let deletedWalletBallance = 0;
+
+      const filteredWalletsList = state.walletsList.filter((wallet) => {
+        if (state.selectedWalletTaskId === wallet.walletId) {
+          deletedWalletBallance = wallet.walletBalance;
+        }
+        return state.selectedWalletTaskId !== wallet.walletId;
+      });
       return {
         ...state,
         walletsList: [...filteredWalletsList],
+        totalBalance: state.totalBalance + deletedWalletBallance,
         // totalBalance: state.totalBalance - selectedWallet.walletBalance,
       };
     case actionTypes.deleteIncome:
@@ -249,13 +249,9 @@ const reducer = (state = initialState, action) => {
     case actionTypes.setMonthlyIncome:
       return {
         ...state,
-        totalBalance: payload,
-        monthlyIncome: payload,
-      };
-    case actionTypes.setMonthlyIncome:
-      return {
-        ...state,
-        totalBalance: state.totalBalance + payload,
+        monthlyIncome: state.monthlyIncome + payload.incomeValue,
+        totalBalance: state.totalBalance + payload.incomeValue,
+        monthlyIncomesList: [...state.monthlyIncomesList, payload],
       };
 
     case actionTypes.deleteOutcome:
@@ -270,16 +266,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         walletsList: [...filterWalletsListDeleteOutcome],
       };
-    case actionTypes.addWalletBalnaceToTotal:
-      let tempTotalBalance = 0;
-      state.walletsList.map(
-        (wallet) => (tempTotalBalance = wallet.walletBalance + tempTotalBalance)
-      );
-      console.log(tempTotalBalance);
-      return {
-        ...state,
-        totalBalance: tempTotalBalance,
-      };
+    // case actionTypes.addWalletBalnaceToTotal:
+    //   let tempTotalBalance = 0;
+    //   state.walletsList.map(
+    //     (wallet) => (tempTotalBalance = wallet.walletBalance + tempTotalBalance)
+    //   );
+    //   console.log(tempTotalBalance);
+    //   return {
+    //     ...state,
+    //     totalBalance: state.totalBalance + tempTotalBalance,
+    //   };
 
     default:
       return state;
