@@ -28,6 +28,7 @@ const initialState = {
   selectedWallet: "",
   doneWallets: [],
   monthlyIncomesList: [],
+  archiveWallets: [],
 
   walletsList: [
     // {
@@ -266,16 +267,18 @@ const reducer = (state = initialState, action) => {
         ...state,
         walletsList: [...filterWalletsListDeleteOutcome],
       };
-    // case actionTypes.addWalletBalnaceToTotal:
-    //   let tempTotalBalance = 0;
-    //   state.walletsList.map(
-    //     (wallet) => (tempTotalBalance = wallet.walletBalance + tempTotalBalance)
-    //   );
-    //   console.log(tempTotalBalance);
-    //   return {
-    //     ...state,
-    //     totalBalance: state.totalBalance + tempTotalBalance,
-    //   };
+    case actionTypes.sentToHistory:
+      const findedWallet = state.walletsList.find(
+        (wallet) => payload === wallet.walletId
+      );
+      const walletsListAfterHistoryAdd = state.walletsList.filter(
+        (wallet) => payload !== wallet.walletId
+      );
+      return {
+        ...state,
+        archiveWallets: [...state.archiveWallets, findedWallet],
+        walletsList: walletsListAfterHistoryAdd,
+      };
 
     default:
       return state;

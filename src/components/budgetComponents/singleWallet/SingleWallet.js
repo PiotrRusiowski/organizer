@@ -20,11 +20,7 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Divider from "@material-ui/core/Divider";
-import Button from "@material-ui/core/Button";
-import Fade from "@material-ui/core/Fade";
-import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
-import { TrendingUpRounded } from "@material-ui/icons";
+
 import WalletPopper from "../walletList/WalletPopper";
 import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
@@ -117,7 +113,6 @@ const SingleWallet = ({
             <>
               Balance:
               <span style={{ color: walletBalance > 0 ? "green" : "red" }}>
-                {walletBalance > 0 ? <span>+</span> : ""}
                 {walletBalance}$
               </span>
             </>

@@ -1,6 +1,5 @@
 import React from "react";
 import AddBudget from "../components/budgetComponents/AddBudget";
-import BudgetForm from "../components/budgetComponents/BudgetForm/BudgetForm";
 import DataChart from "../components/budgetComponents/dataChart/DataChart";
 import WalletList from "../components/budgetComponents/walletList/WalletList";
 import styled from "styled-components";
@@ -18,7 +17,6 @@ const Events = () => {
       </div>
 
       <AddBudget />
-      <BudgetForm />
       <DataChart />
     </StyledEvents>
   );

@@ -166,3 +166,9 @@ export const addWalletBalnaceToTotal = () => {
     type: actionTypes.addWalletBalnaceToTotal,
   };
 };
+export const sentToHistory = (id) => {
+  return {
+    type: actionTypes.sentToHistory,
+    payload: id,
+  };
+};

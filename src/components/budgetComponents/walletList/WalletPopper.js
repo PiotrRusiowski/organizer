@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import {
   openWalletModal as openWalletModalAction,
+  sentToHistory as sentToHistoryAction,
   setDeleteAlertOpen,
 } from "../../../actions";
 import { connect } from "react-redux";
@@ -15,6 +16,7 @@ const WalletPopper = ({
   selectedWallet,
   openWalletModal,
   deleteAlertOpen,
+  sentToHistory,
 }) => {
   const { walletId } = selectedWallet;
   return (
@@ -33,6 +35,9 @@ const WalletPopper = ({
                   <button onClick={() => deleteAlertOpen(walletId)}>X</button>
                 </li>
                 <button>edit</button>
+                <button onClick={() => sentToHistory(walletId)}>
+                  sent to history
+                </button>
               </ul>
             </Typography>
           </Paper>
@@ -45,6 +50,7 @@ const mapStateToProps = (state) => ({
   selectedWallet: state.selectedWallet,
 });
 const mapDispatchToProps = (dispatch) => ({
+  sentToHistory: (walletId) => dispatch(sentToHistoryAction(walletId)),
   openWalletModal: () => dispatch(openWalletModalAction()),
   deleteAlertOpen: (walletId) => dispatch(setDeleteAlertOpen(walletId)),
 });

@@ -7,8 +7,10 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { mainTheme } from "./styles/mainTheme";
+import GlobalStyle from "./styles/GlobalStyle";
 ReactDOM.render(
   <React.StrictMode>
+    <GlobalStyle />
     <ThemeProvider theme={mainTheme}>
       <BrowserRouter>
         <Provider store={store}>
