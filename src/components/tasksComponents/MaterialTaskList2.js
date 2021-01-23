@@ -74,14 +74,10 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 const useHeadStyles = makeStyles((theme) => ({
-  tableRow: {
-    // width: "500px",
-    // backgroundColor: "black",
-  },
+  tableRow: {},
   tableCellContainer: {
     display: "grid",
     gridTemplateColumns: "30px 1fr 150px 82px 70px",
-    // backgroundColor: "green",
     columnGap: "12px",
     padding: "0px",
     paddingBottom: "10px",
@@ -337,10 +333,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     position: "relative",
   },
-  // divider: {
-  //   position: "absolute",
-  //   bottom: "20px",
-  // },
+
   checkbox: {
     width: "10px",
     borderBottom: "none",
@@ -350,7 +343,6 @@ const useStyles = makeStyles((theme) => ({
   },
   calendar: {
     width: "140px",
-    // backgroundColor: "white",
     padding: "0px",
   },
 }));

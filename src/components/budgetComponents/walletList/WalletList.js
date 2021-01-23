@@ -1,18 +1,15 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import SingleWallet from "../singleWallet/SingleWallet";
-import { addWalletBalnaceToTotal as addWalletBalnaceToTotalAction } from "../../../actions";
+import { selectedWallet as selectedWalletAction } from "../../../actions";
 
-const WalletList = ({ walletsList, addWalletBalnaceToTotal }) => {
-  // useEffect(() => {
-  //   addWalletBalnaceToTotal();
-  // }, [walletsList]);
+const WalletList = ({ walletsList, selectedWallet }) => {
   return (
     <div>
       <ul>
         {walletsList.map((wallet) => (
           <>
-            <SingleWallet {...wallet} />
+            <SingleWallet {...wallet} selectedWallet={selectedWallet} />
           </>
         ))}
       </ul>
@@ -23,7 +20,7 @@ const mapStateToProps = (state) => ({
   walletsList: state.walletsList,
 });
 const mapDispatchToProps = (dispatch) => ({
-  // addWalletBalnaceToTotal: () => dispatch(addWalletBalnaceToTotalAction()),
+  selectedWallet: (id) => dispatch(selectedWalletAction(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletList);

@@ -5,7 +5,7 @@ import WalletList from "../components/budgetComponents/walletList/WalletList";
 import styled from "styled-components";
 import BudgetHeader from "../components/budgetComponents/BudgetHeader/BudgetHeader";
 
-const Events = () => {
+const CreateNewBudgets = () => {
   const StyledEvents = styled.div`
     display: flex;
   `;
@@ -22,4 +22,4 @@ const Events = () => {
   );
 };
 
-export default Events;
+export default CreateNewBudgets;

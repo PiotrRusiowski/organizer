@@ -1,8 +1,9 @@
 export const routes = {
   home: "/",
   calendar: "/calendar",
-  events: "/events",
+  createNewBudgets: "/createNewBudgets",
   tasks: "/tasks",
-  login: '/',
-  register: '/register'
+  login: "/",
+  register: "/register",
+  walletsHistory: "/walletsHistory",
 };

@@ -12,20 +12,28 @@ import styled from "styled-components";
 import taskIcon from "../../assecs/icons/taskIcon.png";
 import chartIcon from "../../assecs/icons/chartIcon.png";
 import { makeStyles } from "@material-ui/core/styles";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import StarBorder from "@material-ui/icons/StarBorder";
+import Collapse from "@material-ui/core/Collapse";
+import List from "@material-ui/core/List";
+
+const useStyles = makeStyles((theme) => ({
+  listItem: {
+    fontSize: "15px",
+  },
+  listItemText: {
+    fontSize: "8px",
+  },
+}));
 
 const Navbar = ({ currentUser }) => {
-  const useStyles = makeStyles((theme) => ({
-    listItem: {
-      // "&:hover": {
-      //   background: "black",
-      // },
-    },
-  }));
   const classes = useStyles();
 
   const StyledLink = styled(Link)`
     color: white;
     text-decoration: none;
+    font-size: 15px;
   `;
   const StyledIcon = styled.img`
     width: 25px;
@@ -33,14 +41,20 @@ const Navbar = ({ currentUser }) => {
     margin-right: 30px;
   `;
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
   return (
     <>
       <StyledLink to={routes.home}>
-        <ListItem className={classes.listItem} button>
+        <ListItem button>
           <ListItemIcon>
             <ShoppingCartIcon />
           </ListItemIcon>
-          <ListItemText primary="Home" />
+
+          <ListItemText disableTypography primary="Home" />
         </ListItem>
       </StyledLink>
 
@@ -49,26 +63,46 @@ const Navbar = ({ currentUser }) => {
           <ListItemIcon>
             <StyledIcon />
           </ListItemIcon>
-          <ListItemText primary="Calendar" />
+          <ListItemText disableTypography primary="Note" />
         </ListItem>
       </StyledLink>
 
       <StyledLink to={routes.tasks}>
         <ListItem button>
           <StyledIcon src={taskIcon} />
-          <ListItemText primary="Tasks" />
+          <ListItemText disableTypography primary="Tasks" />
         </ListItem>
       </StyledLink>
 
-      <StyledLink to={routes.events}>
-        <ListItem button>
+      <StyledLink>
+        <ListItem button onClick={handleClick}>
           <ListItemIcon>
             <StyledIcon src={chartIcon} />
           </ListItemIcon>
-          <ListItemText primary="Events" />
+          <ListItemText disableTypography primary="My budget" />
+          {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
       </StyledLink>
-
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <StyledLink to={routes.createNewBudgets}>
+            <ListItem button>
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText disableTypography primary="Create new budget" />
+            </ListItem>
+          </StyledLink>
+          <StyledLink to={routes.walletsHistory}>
+            <ListItem button>
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText disableTypography primary="Wallets history" />
+            </ListItem>
+          </StyledLink>
+        </List>
+      </Collapse>
       <ListItem button>
         <ListItemIcon>
           <AssignmentIcon />
@@ -87,31 +121,3 @@ const mapStateToProps = (state) => {
   };
 };
 export default connect(mapStateToProps)(Navbar);
-
-// import React from "react";
-
-// export const mainListItems = <div></div>;
-
-// export const secondaryListItems = (
-//   <div>
-//     <ListSubheader inset>Saved reports</ListSubheader>
-//     <ListItem button>
-//       <ListItemIcon>
-//         <AssignmentIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Current month" />
-//     </ListItem>
-//     <ListItem button>
-//       <ListItemIcon>
-//         <AssignmentIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Last quarter" />
-//     </ListItem>
-//     <ListItem button>
-//       <ListItemIcon>
-//         <AssignmentIcon />
-//       </ListItemIcon>
-//       <ListItemText primary="Year-end sale" />
-//     </ListItem>
-//   </div>
-// );

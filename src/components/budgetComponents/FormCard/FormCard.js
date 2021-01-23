@@ -133,12 +133,5 @@ const FormCard = ({ handleSubmit, type, incomesList }) => {
     </>
   );
 };
-// const mapStateToProps = (state) => ({
-//   incomesList: state.monthlyIncomesList,
-// });
-const mapDispatchToProps = (dispatch) => ({
-  setMonthlyIncome: (singleIncome) =>
-    dispatch(setMonthlyIncomeAction(singleIncome)),
-});
 
 export default FormCard;

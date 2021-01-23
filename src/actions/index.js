@@ -130,10 +130,10 @@ export const setWalletCollapsed = (walletId) => {
     payload: walletId,
   };
 };
-export const deleteIncome = (id) => {
+export const deleteIncome = (id, incomeValue) => {
   return {
     type: actionTypes.deleteIncome,
-    payload: id,
+    payload: { id, incomeValue },
   };
 };
 export const selectedWallet = (id) => {
@@ -155,10 +155,10 @@ export const setMonthlyIncome = (singleIncome) => {
     payload: singleIncome,
   };
 };
-export const deleteOutcome = (id) => {
+export const deleteOutcome = (id, outcomeValue) => {
   return {
     type: actionTypes.deleteOutcome,
-    payload: id,
+    payload: { id, outcomeValue },
   };
 };
 export const addWalletBalnaceToTotal = () => {
@@ -170,5 +170,11 @@ export const sentToHistory = (id) => {
   return {
     type: actionTypes.sentToHistory,
     payload: id,
+  };
+};
+export const addNote = (note) => {
+  return {
+    type: actionTypes.addNote,
+    payload: note,
   };
 };

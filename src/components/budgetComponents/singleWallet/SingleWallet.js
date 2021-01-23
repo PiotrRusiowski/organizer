@@ -4,7 +4,6 @@ import {
   setDeleteAlertOpen,
   setWalletCollapsed,
   deleteIncome as deleteIncomeAction,
-  selectedWallet as selectedWalletAction,
   deleteOutcome as deleteOutcomeAction,
 } from "../../../actions";
 import Alert from "../../tasksComponents/Alert";
@@ -20,8 +19,7 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Divider from "@material-ui/core/Divider";
-
-import WalletPopper from "../walletList/WalletPopper";
+import WalletPopper from "./WalletPopper";
 import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
 
@@ -76,10 +74,20 @@ const SingleWallet = ({
   deleteOutcome,
 }) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  // const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
+  //////
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  ///////
   const handleOpenModal = (event, walletId) => {
     setAnchorEl(event.currentTarget);
     setOpen(!open);
@@ -88,7 +96,7 @@ const SingleWallet = ({
 
   return (
     <li key={walletId}>
-      <WalletPopper anchorEl={anchorEl} open={open} />
+      <WalletPopper anchorEl={anchorEl} open={open} handleClose={handleClose} />
 
       <Card className={classes.card}>
         <CardHeader
@@ -149,7 +157,11 @@ const SingleWallet = ({
                         {income.name}
                         <span style={{ color: "green" }}>{income.value}$</span>
                       </p>
-                      <button onClick={() => deleteIncome(income.id)}>X</button>
+                      <button
+                        onClick={() => deleteIncome(income.id, income.value)}
+                      >
+                        X
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -161,7 +173,9 @@ const SingleWallet = ({
                         {outcome.name}
                         <span style={{ color: "red" }}>-{outcome.value}$</span>
                       </p>
-                      <button onClick={() => deleteOutcome(outcome.id)}>
+                      <button
+                        onClick={() => deleteOutcome(outcome.id, outcome.value)}
+                      >
                         X
                       </button>
                     </li>
@@ -183,8 +197,9 @@ const SingleWallet = ({
 const mapDispatchToProps = (dispatch) => ({
   deleteAlertOpen: (walletId) => dispatch(setDeleteAlertOpen(walletId)),
   setWalletCollapsed: (walletId) => dispatch(setWalletCollapsed(walletId)),
-  deleteIncome: (id) => dispatch(deleteIncomeAction(id)),
-  deleteOutcome: (id) => dispatch(deleteOutcomeAction(id)),
-  selectedWallet: (id) => dispatch(selectedWalletAction(id)),
+  deleteIncome: (id, incomeValue) =>
+    dispatch(deleteIncomeAction(id, incomeValue)),
+  deleteOutcome: (id, outcomeValue) =>
+    dispatch(deleteOutcomeAction(id, outcomeValue)),
 });
 export default connect(null, mapDispatchToProps)(SingleWallet);

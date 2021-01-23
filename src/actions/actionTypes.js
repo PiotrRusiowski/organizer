@@ -28,4 +28,5 @@ export const actionTypes = {
   deleteOutcome: "DELETE_OUTCOME",
   addWalletBalnaceToTotal: "ADD_WALLET_BALLANCE_TO_TOTAL",
   sentToHistory: "SENT_TO_HISTORY",
+  addNote: "ADD_NOTE",
 };

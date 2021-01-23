@@ -1,6 +1,5 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
-
 import {
   closeBudgetModal,
   setBudgetOperation as setBudgetOperationAction,
@@ -44,15 +43,12 @@ const AddBudget = ({
     const amount = e.target.value.value;
 
     if (amount.includes("-")) {
-      console.log("ZAWIERA");
-
       const formatedAmount = amount.slice(1, amount.length);
       const IcomesOutcomes = {
         id: uuidv4(),
         name: e.target.nameOfValue.value,
         value: parseFloat(formatedAmount),
       };
-      // const value = parseInt(e.target.value.value);
       const id = walletId;
 
       addNewBudget(IcomesOutcomes, id);
@@ -62,7 +58,6 @@ const AddBudget = ({
         name: e.target.nameOfValue.value,
         value: parseFloat(amount),
       };
-      // const value = parseInt(e.target.value.value);
       const id = walletId;
 
       addNewBudget(IcomesOutcomes, id);

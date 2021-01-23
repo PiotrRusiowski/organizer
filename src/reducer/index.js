@@ -31,17 +31,20 @@ const initialState = {
   archiveWallets: [],
 
   walletsList: [
-    // {
-    //   walletId: 1,
-    //   walletName: "food",
-    //   walletBalance: 1000,
-    //   outcomes: 0,
-    //   incomes: 0,
-    //   incomesList: [],
-    //   outcomesList: [],
-    //   isCollapse: false,
-    // },
+    {
+      walletId: 1,
+      walletName: "food",
+      walletBalance: 1000,
+      outcomes: 0,
+      incomes: 0,
+      incomesList: [],
+      outcomesList: [],
+      isCollapse: false,
+    },
   ],
+
+  //notes
+  notesList: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -224,9 +227,11 @@ const reducer = (state = initialState, action) => {
     case actionTypes.deleteIncome:
       const filterWalletsList = state.walletsList.map((wallet) => {
         const filteredIncomesList = wallet.incomesList.filter(
-          (income) => income.id !== payload
+          (income) => income.id !== payload.id
         );
         wallet.incomesList = filteredIncomesList;
+        wallet.walletBalance = wallet.walletBalance - payload.incomeValue;
+        wallet.incomes = wallet.incomes - payload.incomeValue;
         return wallet;
       });
       return {
@@ -258,9 +263,12 @@ const reducer = (state = initialState, action) => {
     case actionTypes.deleteOutcome:
       const filterWalletsListDeleteOutcome = state.walletsList.map((wallet) => {
         const filteredOutcomesList = wallet.outcomesList.filter(
-          (outcome) => outcome.id !== payload
+          (outcome) => outcome.id !== payload.id
         );
         wallet.outcomesList = filteredOutcomesList;
+        wallet.outcomes = wallet.outcomes + payload.outcomeValue;
+        wallet.walletBalance = wallet.walletBalance + payload.outcomeValue;
+
         return wallet;
       });
       return {
@@ -278,6 +286,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         archiveWallets: [...state.archiveWallets, findedWallet],
         walletsList: walletsListAfterHistoryAdd,
+        totalBalance: state.totalBalance + findedWallet.walletBalance,
+      };
+    case actionTypes.addNote:
+      return {
+        ...state,
+        notesList: [...state.notesList, payload],
       };
 
     default:
