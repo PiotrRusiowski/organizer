@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   openWalletModal as openWalletModalAction,
   sentToHistory as sentToHistoryAction,
@@ -7,6 +8,7 @@ import {
 import { connect } from "react-redux";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+
 import SendIcon from "@material-ui/icons/Send";
 import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
@@ -51,7 +53,9 @@ const WalletPopper = ({
             handleClose();
           }}
         >
+          {/* <ListItemIcon className={classes.icon}> */}
           <SendIcon className={classes.icon} />
+          {/* </ListItemIcon> */}
           <ListItemText primary="Sent to history" />
         </MenuItem>
         <MenuItem
@@ -66,9 +70,7 @@ const WalletPopper = ({
     </>
   );
 };
-const mapStateToProps = (state) => ({
-  selectedWallet: state.selectedWallet,
-});
+const mapStateToProps = (state) => ({});
 const mapDispatchToProps = (dispatch) => ({
   sentToHistory: (walletId) => dispatch(sentToHistoryAction(walletId)),
   openWalletModal: () => dispatch(openWalletModalAction()),

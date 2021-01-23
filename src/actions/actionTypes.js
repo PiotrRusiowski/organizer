@@ -22,7 +22,7 @@ export const actionTypes = {
   deleteSingleWallet: "DELETE_SINGLE_WALLET",
   setWalletCollapsed: "SET_WALLET_COLLAPSED",
   deleteIncome: "DELETE_INCOME",
-  selectedWallet: "SELECTED_WALLET",
+  setSelectedWallet: "SET_SELECTED_WALLET",
   openWalletModal: "OPEN_WALLET_MODAL",
   setMonthlyIncome: "SET_MONTHLY_INCOME",
   deleteOutcome: "DELETE_OUTCOME",

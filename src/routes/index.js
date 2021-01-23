@@ -1,6 +1,6 @@
 export const routes = {
   home: "/",
-  calendar: "/calendar",
+  note: "/note",
   createNewBudgets: "/createNewBudgets",
   tasks: "/tasks",
   login: "/",

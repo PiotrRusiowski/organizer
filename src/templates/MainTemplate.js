@@ -4,9 +4,9 @@ import Dashboard from "../components/Dashboard/Dashboard";
 import Home from "../views/Home";
 import { routes } from "../routes";
 import Tasks from "../views/Tasks";
-import Calendar from "../views/Calendar";
-import WalletsHistory from "../components/budgetComponents/WalletsHistory/WalletsHistory";
+import Note from "../views/Note";
 import CreateNewBudgets from "../views/CreateNewBudgets";
+import WalletsHistoryView from "../views/WalletsHistoryView";
 
 const MainTemplate = () => {
   return (
@@ -16,8 +16,8 @@ const MainTemplate = () => {
           <Route exact path={routes.home} component={Home} />
           <Route path={routes.tasks} component={Tasks} />
           <Route path={routes.createNewBudgets} component={CreateNewBudgets} />
-          <Route path={routes.calendar} component={Calendar} />
-          <Route path={routes.walletsHistory} component={WalletsHistory} />
+          <Route path={routes.note} component={Note} />
+          <Route path={routes.walletsHistory} component={WalletsHistoryView} />
         </Switch>
       </Dashboard>
     </>

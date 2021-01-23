@@ -29,6 +29,7 @@ const initialState = {
   doneWallets: [],
   monthlyIncomesList: [],
   archiveWallets: [],
+  selectedHistoryWallet: "",
 
   walletsList: [
     {
@@ -238,13 +239,22 @@ const reducer = (state = initialState, action) => {
         ...state,
         walletsList: [...filterWalletsList],
       };
-    case actionTypes.selectedWallet:
+    case actionTypes.setSelectedWallet:
       const setSelectedWallet = state.walletsList.find(
+        (wallet) => payload === wallet.walletId
+      );
+
+      return {
+        ...state,
+        selectedWallet: setSelectedWallet,
+      };
+    case actionTypes.selectedWallet:
+      const setSelectedHistoryWallet = state.archiveWallets.find(
         (wallet) => payload === wallet.walletId
       );
       return {
         ...state,
-        selectedWallet: setSelectedWallet,
+        selectedHistoryWallet: setSelectedHistoryWallet,
       };
 
     case actionTypes.openWalletModal:

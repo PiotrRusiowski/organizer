@@ -1,5 +1,5 @@
 import React from "react";
-import RegisterForm from "../components/RegisterForm";
+import RegisterForm from "../components/startForm/RegisterForm";
 import { routes } from "../routes";
 import { Link } from "react-router-dom";
 

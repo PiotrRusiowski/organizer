@@ -2,8 +2,24 @@ import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
 import { addNote as addNoteAction } from "../../actions";
+import styled from "styled-components";
+import Card from "@material-ui/core/Card";
+import { makeStyles } from "@material-ui/core/styles";
 
+const useStyles = makeStyles({
+  root: {
+    minWidth: 400,
+    minHeight: 400,
+  },
+});
+const StyledNoteConcent = styled.textarea`
+  border: none;
+  width: 100px;
+  height: 100px;
+`;
 const AddNote = ({ addNote }) => {
+  const classes = useStyles();
+
   const handleAddNote = (e) => {
     e.preventDefault();
     const note = {
@@ -16,9 +32,13 @@ const AddNote = ({ addNote }) => {
     e.target.reset();
   };
   return (
-    <form onSubmit={handleAddNote} style={{ marginTop: "100px" }}>
+    <form onSubmit={handleAddNote} style={{ marginTop: "50px" }}>
       <input type="text" placeholder="title" name="noteTitle" />
-      <textarea name="noteContent" cols="80" type="text" rows="36"></textarea>
+      <div style={{ width: "400px", height: "400px" }}>
+        <Card className={classes.root}>
+          <StyledNoteConcent name="noteContent" type="text"></StyledNoteConcent>
+        </Card>
+      </div>
       <button type="submit">add note</button>
     </form>
   );

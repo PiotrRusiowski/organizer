@@ -1,11 +1,11 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { auth } from "../fireBaseConfig";
+import { auth } from "../../fireBaseConfig";
 import * as Yup from "yup";
 import {
   setUserEmail as setUserEmailAction,
   setUserPassword as setUserPasswordAction,
-} from "../actions";
+} from "../../actions";
 
 import { connect } from "react-redux";
 const contactFormShema = Yup.object().shape({

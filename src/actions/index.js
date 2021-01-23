@@ -136,9 +136,9 @@ export const deleteIncome = (id, incomeValue) => {
     payload: { id, incomeValue },
   };
 };
-export const selectedWallet = (id) => {
+export const setSelectedWallet = (id) => {
   return {
-    type: actionTypes.selectedWallet,
+    type: actionTypes.setSelectedWallet,
     payload: id,
   };
 };

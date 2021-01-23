@@ -1,12 +1,12 @@
 import React from "react";
-import { auth } from "../fireBaseConfig";
+import { auth } from "../../fireBaseConfig";
 import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { connect } from "react-redux";
 import {
   setUserEmail as setUserEmailAction,
   setUserPassword as setUserPasswordAction,
-} from "../actions";
+} from "../../actions";
 
 const RegisterForm = ({
   userEmail,
@@ -69,14 +69,6 @@ const RegisterForm = ({
   );
 };
 
-// const mapStateToProps = (state) => {
-//   return {
-//     userEmail: state.userEmail,
-//     userPassword: state.userPassword,
-//   };
-// };
-//skrócona wersja ponizej
-
 const mapStateToProps = ({ userEmail, userPassword }) => ({
   userEmail,
   userPassword,
@@ -86,16 +78,3 @@ const mapDispatchToProps = (dispatch) => ({
   setUserPassword: (password) => dispatch(setUserPasswordAction(password)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
-
-// firebase.auth().createUserWithEmailAndPassword(email, password)
-//     .catch(function(error) {
-//   // Handle Errors here.
-//   var errorCode = error.code;
-//   var errorMessage = error.message;
-//   if (errorCode == 'auth/weak-password') {
-//     alert('The password is too weak.');
-//   } else {
-//     alert(errorMessage);
-//   }
-//   console.log(error);
-// });   ????

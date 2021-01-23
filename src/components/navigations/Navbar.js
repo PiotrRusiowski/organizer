@@ -58,7 +58,7 @@ const Navbar = ({ currentUser }) => {
         </ListItem>
       </StyledLink>
 
-      <StyledLink to={routes.calendar}>
+      <StyledLink to={routes.note}>
         <ListItem button>
           <ListItemIcon>
             <StyledIcon />

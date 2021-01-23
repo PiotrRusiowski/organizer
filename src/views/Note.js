@@ -1,7 +1,7 @@
 import React from "react";
 import AddNote from "../components/notesComponents/AddNote";
 
-const Calendar = () => {
+const Note = () => {
   return (
     <>
       <AddNote />
@@ -9,4 +9,4 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
+export default Note;

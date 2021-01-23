@@ -19,6 +19,7 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Divider from "@material-ui/core/Divider";
+
 import WalletPopper from "./WalletPopper";
 import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
@@ -72,31 +73,32 @@ const SingleWallet = ({
   outcomesList,
   isCollapse,
   deleteOutcome,
+  handleOpenModal,
 }) => {
   const classes = useStyles();
   // const [anchorEl, setAnchorEl] = React.useState(null);
-  const [open, setOpen] = React.useState(false);
-  const [placement, setPlacement] = React.useState();
-  //////
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  // const [open, setOpen] = React.useState(false);
+  // const [placement, setPlacement] = React.useState();
+  // //////
+  // const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  ///////
-  const handleOpenModal = (event, walletId) => {
-    setAnchorEl(event.currentTarget);
-    setOpen(!open);
-    selectedWallet(walletId);
-  };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
+  // ///////
+  // const handleOpenModal = (event, walletId) => {
+  //   setAnchorEl(event.currentTarget);
+  //   setOpen(!open);
+  //   selectedWallet(walletId);
+  // };
 
   return (
     <li key={walletId}>
-      <WalletPopper anchorEl={anchorEl} open={open} handleClose={handleClose} />
+      {/* <WalletPopper anchorEl={anchorEl} open={open} handleClose={handleClose} /> */}
 
       <Card className={classes.card}>
         <CardHeader
