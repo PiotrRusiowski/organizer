@@ -59,7 +59,11 @@ const Navbar = ({ currentUser }) => {
       </StyledLink>
 
       <StyledLink to={routes.note}>
-        <ListItem button>
+        <ListItem
+          button
+          // selected={true}
+          // style={{ backgroundColor: selected ? "yellow" : "none" }}
+        >
           <ListItemIcon>
             <StyledIcon />
           </ListItemIcon>

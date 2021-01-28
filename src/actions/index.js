@@ -178,3 +178,33 @@ export const addNote = (note) => {
     payload: note,
   };
 };
+export const setSelectedArchiveWallet = (id) => {
+  return {
+    type: actionTypes.setSelectedArchiveWallet,
+    payload: id,
+  };
+};
+export const deleteArchiveWallet = (id) => {
+  return {
+    type: actionTypes.deleteArchiveWallet,
+    payload: id,
+  };
+};
+export const returnToBudget = (id) => {
+  return {
+    type: actionTypes.returnToBudget,
+    payload: id,
+  };
+};
+export const editNoteTitle = (newTitle) => {
+  return {
+    type: actionTypes.editNoteTitle,
+    payload: newTitle,
+  };
+};
+export const selectNote = (id) => {
+  return {
+    type: actionTypes.selectNote,
+    payload: id,
+  };
+};

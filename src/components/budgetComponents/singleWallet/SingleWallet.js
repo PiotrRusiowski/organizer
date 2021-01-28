@@ -19,8 +19,6 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Divider from "@material-ui/core/Divider";
-
-import WalletPopper from "./WalletPopper";
 import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
 
@@ -63,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
 const SingleWallet = ({
   setWalletCollapsed,
   deleteIncome,
-  selectedWallet,
   walletId,
   walletName,
   walletBalance,

@@ -29,13 +29,23 @@ const initialState = {
   doneWallets: [],
   monthlyIncomesList: [],
   archiveWallets: [],
-  selectedHistoryWallet: "",
+  selectedArchiveWallet: "",
 
   walletsList: [
     {
       walletId: 1,
-      walletName: "food",
+      walletName: "example",
       walletBalance: 1000,
+      outcomes: 0,
+      incomes: 0,
+      incomesList: [],
+      outcomesList: [],
+      isCollapse: false,
+    },
+    {
+      walletId: 2,
+      walletName: "example2",
+      walletBalance: 1500,
       outcomes: 0,
       incomes: 0,
       incomesList: [],
@@ -44,8 +54,8 @@ const initialState = {
     },
   ],
 
-  //notes
   notesList: [],
+  selectedNote: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -87,7 +97,6 @@ const reducer = (state = initialState, action) => {
         isDeleteAlertOpen: payload,
       };
     case actionTypes.setDeleteAlertOpen:
-      console.log(payload);
       return {
         ...state,
         isDeleteAlertOpen: payload.isOpen,
@@ -248,14 +257,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         selectedWallet: setSelectedWallet,
       };
-    case actionTypes.selectedWallet:
-      const setSelectedHistoryWallet = state.archiveWallets.find(
-        (wallet) => payload === wallet.walletId
-      );
-      return {
-        ...state,
-        selectedHistoryWallet: setSelectedHistoryWallet,
-      };
 
     case actionTypes.openWalletModal:
       return {
@@ -302,6 +303,56 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         notesList: [...state.notesList, payload],
+      };
+    case actionTypes.setSelectedArchiveWallet:
+      const archiveWallet = state.archiveWallets.find(
+        (wallet) => payload === wallet.walletId
+      );
+
+      return {
+        ...state,
+        selectedArchiveWallet: archiveWallet,
+      };
+    case actionTypes.deleteArchiveWallet:
+      const filteredArchiveWallets = state.archiveWallets.filter(
+        (wallet) => wallet.walletId !== state.selectedWalletTaskId
+      );
+      return {
+        ...state,
+        archiveWallets: filteredArchiveWallets,
+      };
+    case actionTypes.returnToBudget:
+      const findedArchiveWallet = state.archiveWallets.find(
+        (wallet) => payload === wallet.walletId
+      );
+      const archiveWalletsAfterReturn = state.archiveWallets.filter(
+        (wallet) => payload !== wallet.walletId
+      );
+      return {
+        ...state,
+        archiveWallets: archiveWalletsAfterReturn,
+        walletsList: [...state.walletsList, findedArchiveWallet],
+        totalBalance: state.totalBalance - findedArchiveWallet.walletBalance,
+      };
+    case actionTypes.editNoteTitle:
+      const mapedNotesList = state.notesList.map((note) => {
+        if (note.id === state.selectedNote.id) {
+          console.log(payload);
+          note.noteTitle = payload;
+        }
+        return note;
+      });
+      return {
+        ...state,
+        notesList: [...mapedNotesList],
+      };
+    case actionTypes.selectNote:
+      const findedNote = state.notesList.find(
+        (note) => note.noteId === payload
+      );
+      return {
+        ...state,
+        selectedNote: findedNote,
       };
 
     default:

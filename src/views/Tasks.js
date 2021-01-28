@@ -5,7 +5,7 @@ import MaterialTaskList2 from "../components/tasksComponents/MaterialTaskList2";
 import styled from "styled-components";
 
 const StyledFormContainer = styled.div`
-  width: 68%;
+  width: 72%;
   margin: auto;
 `;
 

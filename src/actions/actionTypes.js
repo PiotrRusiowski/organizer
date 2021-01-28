@@ -29,4 +29,9 @@ export const actionTypes = {
   addWalletBalnaceToTotal: "ADD_WALLET_BALLANCE_TO_TOTAL",
   sentToHistory: "SENT_TO_HISTORY",
   addNote: "ADD_NOTE",
+  setSelectedArchiveWallet: "SET_SELECTED_ARCHIVE_WALLETS",
+  deleteArchiveWallet: "DELETE_ARCHIVE_WALLET",
+  returnToBudget: "RETURN_TO_BUDGET",
+  editNoteTitle: "EDIT_NOTE_TITLE",
+  selectNote: "SELECT_NOTE",
 };

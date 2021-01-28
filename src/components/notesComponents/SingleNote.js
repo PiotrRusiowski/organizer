@@ -1,7 +1,7 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
-import { addNote as addNoteAction } from "../../actions";
+import { editNoteTitle as changeTitleAction } from "../../actions";
 import styled from "styled-components";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
@@ -34,7 +34,7 @@ const StyledNoteConcent = styled.textarea`
   outline: none;
   padding: 10px;
 `;
-const StyledForm = styled.form`
+const StyledWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,20 +42,11 @@ const StyledForm = styled.form`
   width: 50vw;
   height: 80vh;
 `;
-const AddNote = ({ addNote }) => {
+
+const SingleNote = ({ location, changeTitle, selectedNote }) => {
   const classes = useStyles();
+  const { noteTitle, noteContent } = location.state.note;
 
-  const handleAddNote = (e) => {
-    e.preventDefault();
-    const note = {
-      id: uuidv4(),
-      noteTitle: e.target.noteTitle.value,
-      noteContent: e.target.noteContent.value,
-    };
-    addNote(note);
-
-    e.target.reset();
-  };
   return (
     <Box
       display="flex"
@@ -64,7 +55,7 @@ const AddNote = ({ addNote }) => {
       alignItems="center"
       justifyContent="center"
     >
-      <StyledForm onSubmit={handleAddNote}>
+      <StyledWrapper>
         <Card className={classes.card}>
           <CardHeader
             className={classes.cardHeader}
@@ -78,33 +69,32 @@ const AddNote = ({ addNote }) => {
                     type="text"
                     placeholder="title"
                     name="noteTitle"
+                    value={selectedNote.noteTitle}
+                    onChange={(e) => changeTitle(e.target.value)}
                   />
-
-                  <Button
-                    size="small"
-                    color="primary"
-                    type="submit"
-                    type="submit"
-                  >
-                    add note
-                  </Button>
                 </Box>
               </>
             }
           ></CardHeader>
         </Card>
+
         <Card className={classes.root}>
           <StyledNoteConcent
             name="noteContent"
             type="text"
             placeholder="note..."
+            value={noteContent}
           ></StyledNoteConcent>
         </Card>
-      </StyledForm>
+      </StyledWrapper>
     </Box>
   );
 };
-const mapDispatchToProps = (dispatch) => ({
-  addNote: (note) => dispatch(addNoteAction(note)),
+const mapStateToProps = (state) => ({
+  selectedNote: state.selectedNote,
 });
-export default connect(null, mapDispatchToProps)(AddNote);
+const mapDispatchToProps = (dispatch) => ({
+  changeTitle: (newTitle) => dispatch(changeTitleAction(newTitle)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleNote);

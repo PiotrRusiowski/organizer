@@ -1,13 +1,20 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import SingleWallet from "../singleWallet/SingleWallet";
-import { setSelectedWallet as setSelectedWalletAction } from "../../../actions";
+import {
+  setSelectedWallet as setSelectedWalletAction,
+  sentToHistory as sentToHistoryAction,
+} from "../../../actions";
 import WalletPopper from "../singleWallet/WalletPopper";
 
-const WalletList = ({ walletsList, setSelectedWallet, selectedWallet }) => {
+const WalletList = ({
+  walletsList,
+  setSelectedWallet,
+  selectedWallet,
+  sentToHistory,
+}) => {
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
-  //////
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -17,12 +24,13 @@ const WalletList = ({ walletsList, setSelectedWallet, selectedWallet }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  ///////
+
   const handleOpenModal = (event, walletId) => {
     setAnchorEl(event.currentTarget);
     setOpen(!open);
     setSelectedWallet(walletId);
   };
+  const type = "walletsList";
   return (
     <div>
       <ul>
@@ -33,6 +41,8 @@ const WalletList = ({ walletsList, setSelectedWallet, selectedWallet }) => {
               open={open}
               handleClose={handleClose}
               selectedWallet={selectedWallet}
+              sentToHistory={sentToHistory}
+              type={type}
             />
 
             <SingleWallet {...wallet} handleOpenModal={handleOpenModal} />
@@ -48,6 +58,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
   setSelectedWallet: (id) => dispatch(setSelectedWalletAction(id)),
+  sentToHistory: (walletId) => dispatch(sentToHistoryAction(walletId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletList);

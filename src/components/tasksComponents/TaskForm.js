@@ -84,7 +84,6 @@ const TaskForm = ({ addNewTask }) => {
 
     const deadline = moment(selectedDate).format("DD/MM/YYYY");
 
-    console.log(deadline);
     console.log(JSON.parse(e.target.prioritySelect.value));
 
     const priorityObject = JSON.parse(e.target.prioritySelect.value);

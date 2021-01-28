@@ -170,6 +170,8 @@ const EnhancedTableHead = (props) => {
 
   const sortTasksListByPriority = () => {
     if (prioritySortDirection === "desc") {
+      console.log("Desc");
+
       const sortedTasksList = tasksList.sort(
         (a, b) => a.priority.priorityValue - b.priority.priorityValue
       );
@@ -177,6 +179,8 @@ const EnhancedTableHead = (props) => {
       sortTasksByPiority(sortedTasksList);
       setPrioritySortDirection("asc");
     } else {
+      console.log("SORT2");
+
       const sortedTasksList = tasksList.sort(
         (a, b) => b.priority.priorityValue - a.priority.priorityValue
       );
@@ -567,7 +571,6 @@ const MaterialTaskList2 = ({
                                     defaultValue={JSON.stringify({
                                       priorityName: "low",
                                       priorityValue: 1,
-                                      priorityColor: "green",
                                     })}
                                   >
                                     <MenuItem
@@ -575,7 +578,6 @@ const MaterialTaskList2 = ({
                                       value={JSON.stringify({
                                         priorityName: "low",
                                         priorityValue: 1,
-                                        priorityColor: "green",
                                       })}
                                     >
                                       Low
@@ -583,7 +585,6 @@ const MaterialTaskList2 = ({
                                     <MenuItem
                                       value={JSON.stringify({
                                         priorityName: "medium",
-                                        priorityColor: "orange",
                                         priorityValue: 2,
                                       })}
                                     >
@@ -592,7 +593,6 @@ const MaterialTaskList2 = ({
                                     <MenuItem
                                       value={JSON.stringify({
                                         priorityName: "high",
-                                        priorityColor: "red",
                                         priorityValue: 3,
                                       })}
                                     >

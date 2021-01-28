@@ -9,6 +9,7 @@ import {
   setDeleteAlertClose,
   deleteSingleTask as deleteSingleTaskAction,
   deleteSingleWallet as deleteSingleWalletAction,
+  deleteArchiveWallet as deleteArchiveWalletAction,
 } from "../../actions";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -18,9 +19,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Alert = ({
   deleteAlertClose,
   isDeleteAlertOpen,
-
   deleteSingleTask,
   deleteSingleWallet,
+  deleteArchiveWallet,
 }) => {
   return (
     <Dialog
@@ -44,6 +45,7 @@ const Alert = ({
             deleteSingleWallet();
             deleteAlertClose();
             deleteSingleTask();
+            deleteArchiveWallet();
           }}
           color="secondary"
           variant="contained"
@@ -61,5 +63,6 @@ const mapDispatchToProps = (dispatch) => ({
   deleteAlertClose: () => dispatch(setDeleteAlertClose()),
   deleteSingleTask: () => dispatch(deleteSingleTaskAction()),
   deleteSingleWallet: () => dispatch(deleteSingleWalletAction()),
+  deleteArchiveWallet: () => dispatch(deleteArchiveWalletAction()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Alert);
