@@ -55,7 +55,7 @@ const initialState = {
   ],
 
   notesList: [],
-  selectedNote: null,
+  selectedNote: "",
 };
 
 const reducer = (state = initialState, action) => {
@@ -336,8 +336,8 @@ const reducer = (state = initialState, action) => {
       };
     case actionTypes.editNoteTitle:
       const mapedNotesList = state.notesList.map((note) => {
+        console.log(payload);
         if (note.id === state.selectedNote.id) {
-          console.log(payload);
           note.noteTitle = payload;
         }
         return note;
@@ -347,9 +347,7 @@ const reducer = (state = initialState, action) => {
         notesList: [...mapedNotesList],
       };
     case actionTypes.selectNote:
-      const findedNote = state.notesList.find(
-        (note) => note.noteId === payload
-      );
+      const findedNote = state.notesList.find((note) => note.id === payload);
       return {
         ...state,
         selectedNote: findedNote,

@@ -57,7 +57,7 @@ function a11yProps(index) {
     "aria-controls": `scrollable-auto-tabpanel-${index}`,
   };
 }
-
+///////////////
 const WalletsHistory = ({
   archiveWallets,
   setSelectedArchiveWallet,
@@ -68,10 +68,8 @@ const WalletsHistory = ({
 
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
-  //////
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [value, setValue] = React.useState(2);
-  // const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

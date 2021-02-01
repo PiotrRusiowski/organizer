@@ -8,17 +8,20 @@ import BudgetHeader from "../components/budgetComponents/BudgetHeader/BudgetHead
 const CreateNewBudgets = () => {
   const StyledEvents = styled.div`
     display: flex;
+    flex-direction: column;
   `;
   return (
-    <StyledEvents>
-      <div>
+    <>
+      <StyledEvents>
         <BudgetHeader />
-        <WalletList />
-      </div>
 
-      <AddBudget />
-      <DataChart />
-    </StyledEvents>
+        <div>
+          <WalletList />
+          <DataChart />
+        </div>
+        <AddBudget />
+      </StyledEvents>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
-import { editNoteTitle as changeTitleAction } from "../../actions";
+import { editNoteTitle as editNoteTitleAction } from "../../actions";
 import styled from "styled-components";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
@@ -43,10 +43,12 @@ const StyledWrapper = styled.div`
   height: 80vh;
 `;
 
-const SingleNote = ({ location, changeTitle, selectedNote }) => {
+const SingleNote = ({ location, editNoteTitle, selectedNote }) => {
   const classes = useStyles();
   const { noteTitle, noteContent } = location.state.note;
-
+  const handleChange = (e) => {
+    editNoteTitle(e.target.value);
+  };
   return (
     <Box
       display="flex"
@@ -69,8 +71,8 @@ const SingleNote = ({ location, changeTitle, selectedNote }) => {
                     type="text"
                     placeholder="title"
                     name="noteTitle"
+                    onChange={handleChange}
                     value={selectedNote.noteTitle}
-                    onChange={(e) => changeTitle(e.target.value)}
                   />
                 </Box>
               </>
@@ -94,7 +96,7 @@ const mapStateToProps = (state) => ({
   selectedNote: state.selectedNote,
 });
 const mapDispatchToProps = (dispatch) => ({
-  changeTitle: (newTitle) => dispatch(changeTitleAction(newTitle)),
+  editNoteTitle: (newTitle) => dispatch(editNoteTitleAction(newTitle)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleNote);

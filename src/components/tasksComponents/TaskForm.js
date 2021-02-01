@@ -17,6 +17,10 @@ import { connect } from "react-redux";
 import { addNewTask as addNewTaskAction } from "../../actions";
 import moment from "moment";
 import Box from "@material-ui/core/Box";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Card from "@material-ui/core/Card";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,6 +72,17 @@ const useStyles = makeStyles((theme) => ({
   priorityColor: {
     color: "green",
   },
+  card: {
+    maxWidth: "350px",
+    marginBottom: "10px",
+  },
+  cardHeader: {
+    padding: "15px 15px 0px",
+  },
+  taskName: {
+    marginTop: "24px",
+    marginRight: "5px",
+  },
 }));
 
 const TaskForm = ({ addNewTask }) => {
@@ -103,96 +118,99 @@ const TaskForm = ({ addNewTask }) => {
 
   return (
     <>
-      <form className={classes.form} onSubmit={handleSubmit}>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          width="300px"
-        >
-          <TextField
-            id="outlined-basic"
-            label="dodaj zadanie"
-            className={classes.input}
-            name="name"
-            required
-          />
+      <Card className={classes.card}>
+        <CardHeader
+          className={classes.cardHeader}
+          title={
+            <>
+              <form onSubmit={handleSubmit}>
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  width="300px"
+                >
+                  <TextField
+                    className={classes.taskName}
+                    id="outlined-basic"
+                    placeholder="add task"
+                    name="name"
+                    required
+                  />
 
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              className={classes.calendar}
-              margin="normal"
-              id="date-picker-dialog"
-              label="Task deadline"
-              format="dd/MM/yyyy"
-              value={selectedDate}
-              onChange={handleDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
-            />
-          </MuiPickersUtilsProvider>
-        </Box>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          width="300px"
-        >
-          <FormControl className={classes.formControl}>
-            <InputLabel
-              id="demo-controlled-open-select-label"
-              className={classes.inputLabel}
-            >
-              prioryty
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-outlined-label"
-              id="demo-simple-select-outlined"
-              label="prioryty"
-              name="prioritySelect"
-              defaultValue={JSON.stringify({
-                priorityName: "low",
-                priorityValue: 1,
-              })}
-              // className={classes.select}
-            >
-              <MenuItem
-                className={classes.menuItem}
-                value={JSON.stringify({
-                  priorityName: "low",
-                  priorityValue: 1,
-                  priorityColor: "green",
-                })}
-              >
-                Low
-              </MenuItem>
-              <MenuItem
-                value={JSON.stringify({
-                  priorityName: "medium",
-                  priorityColor: "orange",
-                  priorityValue: 2,
-                })}
-              >
-                Medium
-              </MenuItem>
-              <MenuItem
-                value={JSON.stringify({
-                  priorityName: "high",
-                  priorityColor: "red",
-                  priorityValue: 3,
-                })}
-              >
-                High
-              </MenuItem>
-            </Select>
-          </FormControl>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                      className={classes.calendar}
+                      margin="normal"
+                      id="date-picker-dialog"
+                      label="Task deadline"
+                      format="dd/MM/yyyy"
+                      value={selectedDate}
+                      onChange={handleDateChange}
+                      KeyboardButtonProps={{
+                        "aria-label": "change date",
+                      }}
+                    />
+                  </MuiPickersUtilsProvider>
+                </Box>
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  width="300px"
+                >
+                  <FormControl className={classes.formControl}>
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      label="prioryty"
+                      name="prioritySelect"
+                      defaultValue={JSON.stringify({
+                        priorityName: "low",
+                        priorityValue: 1,
+                        priorityColor: "green",
+                      })}
+                    >
+                      <MenuItem
+                        className={classes.menuItem}
+                        value={JSON.stringify({
+                          priorityName: "low",
+                          priorityValue: 1,
+                          priorityColor: "green",
+                        })}
+                      >
+                        Low
+                      </MenuItem>
+                      <MenuItem
+                        value={JSON.stringify({
+                          priorityName: "medium",
+                          priorityColor: "orange",
+                          priorityValue: 2,
+                        })}
+                      >
+                        Medium
+                      </MenuItem>
+                      <MenuItem
+                        value={JSON.stringify({
+                          priorityName: "high",
+                          priorityColor: "red",
+                          priorityValue: 3,
+                        })}
+                      >
+                        High
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
 
-          <Button variant="contained" className={classes.btn} type="submit">
-            AddTask
-          </Button>
-        </Box>
-      </form>
+                  <Button size="small" color="primary" type="submit">
+                    Task name
+                  </Button>
+                </Box>
+              </form>
+            </>
+          }
+        ></CardHeader>
+      </Card>
     </>
   );
 };

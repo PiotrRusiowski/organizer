@@ -27,12 +27,12 @@ const MainTemplate = () => {
               path={routes.createNewBudgets}
               component={CreateNewBudgets}
             />
-            <Route exact path={routes.note} component={Note} />
-            <Route path={routes.singleNote} component={SingleNote} />
             <Route
               path={routes.walletsHistory}
               component={WalletsHistoryView}
             />
+            <Route exact path={routes.note} component={Note} />
+            <Route path={routes.singleNote} component={SingleNote} />
           </StyledContainer>
         </Switch>
       </Dashboard>
